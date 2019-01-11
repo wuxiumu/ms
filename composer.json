@@ -1,0 +1,18 @@
+{
+	"name": "phpms frame",
+    "description": "PHP Interview 2019 ,my phpms framework",
+    "type": "Framework",
+    "keywords": [
+        "php",
+        "php framework"
+    ],
+    "require": {
+        "erusev/parsedown": "^1.7",
+        "symfony/var-dumper":"*",
+        "catfan/medoo":"*",
+        "twig/twig":"*",
+        "gregwar/captcha": "^1.1",
+		"filp/whoops": "^2.3",
+		"twbs/bootstrap": "^4.2"     
+    }
+}
