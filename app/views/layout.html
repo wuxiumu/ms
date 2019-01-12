@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>phpms</title>
+	<link rel="stylesheet" href="/public/css/bootstrap.min.css">  
+	<script src="/public/js/jquery.min.js"></script>
+	<script src="/public/js/bootstrap.min.js"></script>
+	<style>
+    .fakeimg {
+        height: 200px;
+         background: #aaa;
+    }
+  </style>
+</head>
+<body>
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>我的第一个php,笔试,面试总结</h1>
+  <p>一个单身狗的跟你解释const 常量 <br> 
+1.在定义时必须被初始值<br> 
+2.前面不加任何修饰符....<br>
+3.变量名字母一般都大写<br>
+4.常量可以被子类继承....<br>
+5.一个常量是属于一个类的，而不是某个对象的</p> 
+</div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/">网站首页</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">phpms</a></li>
+        <li><a href="/index.php/index/term/id/1">笔试</a></li>
+        <li><a href="/index.php/index/term/id/2">面试</a></li>
+        <li><a href="/index.php/login/user#login">登陆</a></li>
+        <li><a href="/index.php/login/user" class="btn dropdown-toggle" id="dropdownMenu1" 
+      data-toggle="dropdown">更多</a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="/index.php/edit/add">添加文章</a>
+          </li>
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="/index.php/edit/index">文章列表</a>
+          </li>
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">分类列表</a>
+          </li>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="/index.php/login/user_loginout">退出</a>
+          </li>
+        </ul>  
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h2>关于我</h2>
+      <h5>瞧一瞧，看一看:</h5>
+      <div ><img src="/public/img/dsgo.gif"></div>
+      <p>吴先生，20已过半，30还未满，175的个子，65kg的体重，平淡的就像差不多先生，一个非主流的程序员，目前的理想是赚钱，得一灵魂伴侣，然后隐居山水之间，蹦野迪</p>
+      <h3>友情链接</h3>
+      <p>一切只是开始,我从未放弃过改变</p>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="https://github.com/wuxiumu">github</a></li>
+        <li><a href="https://meiyoufan.com">个人站点</a></li>
+        <li><a href="http://wqb.science">github站点</a></li>
+      </ul>
+      <hr class="hidden-sm hidden-md hidden-lg">
+    </div>
+    <div class="col-sm-8">
+       {% block content %}
+
+       {% endblock %}
+    </div>
+  </div>
+</div>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <p>有需要的，可以联系我 wuxiumu@163.com</p>
+</div>
+</body>
+</html>

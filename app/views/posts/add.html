@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>文章编辑</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel="stylesheet" href="/public/css/bootstrap.min.css"> 
+  <link href="/public/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/public/css/style.css">
+  <script src="/public/js/jquery.min.js"></script>
+  <script src="/public/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/public/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+</head>
+
+<body style="background-color: rgba(0, 204, 204, 0.15);">
+<div class="container">
+
+<form role="form" action="/index.php/edit/add_action" method="post">
+	<div class="form-group">
+		<label for="title">标题</label>
+		<input type="text" id="title" class="form-control title" rows="1" name="title" value="{{ data.post.title }}">
+	</div>
+	<div class="form-group">
+		<label for="description">描述</label>
+		<textarea class="form-control" rows="3" name="description">{{ data.post.description }}</textarea>
+	</div>
+	<div class="form-group">
+		<label for="name">内容</label>
+		<textarea id="content" class="form-control" rows="3" name="content">{{ data.post.content }}</textarea>		
+		<input class="btn btn-default" type="button" value="预览切换" onclick="showapp()">
+	</div>
+	<div class="form-group">
+		<label for="name">时间 </label>
+		<input style="border: 1px solid #ccc;border-radius: 4px;" type="text" value="2019-01-11 11:11" id="datetimepicker" name="created_at" value="">
+	</div>
+	<label for="name">状态</label>
+	<div>
+		<label class="radio-inline">
+			<input type="radio" name="display" id="optionsRadios3" value="1" checked> 发布
+		</label>
+		<label class="radio-inline">
+			<input type="radio" name="display" id="optionsRadios4"  value="0"> 隐藏
+		</label></br>
+		<label class="checkbox-inline">
+			<input type="checkbox" id="inlineCheckbox1" value="option1"> 置顶
+		</label>
+		<label class="checkbox-inline">
+			<input type="checkbox" id="inlineCheckbox2" value="option2"> 推荐
+		</label>
+		<label class="checkbox-inline">
+			<input type="checkbox" id="inlineCheckbox3" value="option3"> 最热
+		</label>
+
+	</div>   
+	 <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+      	<input type="hidden" name="id" value="{{ data.post.id }}">
+        <button type="submit" class="btn btn-default">提交</button>
+      </div>
+    </div>  	
+</form>
+<script type="text/javascript">
+	$('#datetimepicker').datetimepicker({
+	    weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+	});
+</script>
+
+
+
+</div>
+
+<div id="app-wall" v-bind:class="{'full': isFull}" v-bind:style="{backgroundColor: actualSkin.wall}">
+
+<div style="text-align:center;clear:both">
+ 
+</div>
+  <div id="app" style="display: none;">
+    <header @click="toggleFull">标题
+      <div class="buttons"></div>
+    </header>
+    <div class="editor"> 
+      <textarea class="code" autofocus="autofocus" v-model="code" v-bind:style="{color: actualSkin.color}"></textarea>
+      <div class="result" v-html="compiledOutput"></div>
+      <div class="settings" v-bind:class="{'active': isSettings}"> 
+        <h2>Settings<i class="fa fa-window-close-o" @click="isSettings = false"></i></h2>
+        <h3>Editor Theme</h3>
+        <div class="skin" v-for="skin in skins" v-bind:class="{'active': skin.isActive}" v-bind:style="{background:skin.color}" @click="setSkin(skin)"></div>
+        <h3>Screen</h3><span class="toggleView" v-show="!isFull" @click="isFull = true"><i class="fa fa-window-maximize"></i>Full Screen</span><span class="toggleView" v-show="isFull" @click="isFull = false"><i class="fa fa-window-restore"></i>Compact</span>
+        <h3>Update</h3><span class="search" @click="updateMe"><i class="fa fa-refresh"></i>Search for updates</span>
+        <div class="alert" v-bind:class="{'updating': isUpdating}">
+          <div class="text">Hehehe, serious?? You know it's not gonna happen, right?</div>
+        </div>
+      </div>
+    </div>
+    <footer v-bind:style="{background:actualSkin.background}">{{ appTitle }}<i class="fa fa-cog" v-bind:class="{'lookme': isSeen}" @click="showSettings"></i></footer>
+  </div>
+</div>
+
+    <script src='/public/js/vue.min.js'></script>
+	<script src='/public/js/marked.min.js'></script>
+	<script>
+		function showapp(){
+			$("#app").toggle();
+		}
+		$(document).ready(function(){
+		    var $input_title = $("#title");
+			$input_title.keyup(function() {				
+				var _title = $(this).val();
+				$("#app header").text(_title);
+			});
+		    var $input_content = $("#content");
+			$input_content.keyup(function() {				
+				var _content = $(this).val();
+				$("#app .code").text(_content);
+				console.log(_content);
+				$('.code').trigger("click"); 
+			});			
+		})
+
+	</script>
+    <script>
+    	/**
+		 * ROOT COMPONENT
+		 */
+		var app = new Vue({
+		  el: '#app-wall',
+		  data: {
+		    appTitle: 'VueDown Editor',
+		    code: '{{ data.post.content }}',
+		    isSeen: true,
+		    isSettings: false,
+		    isFull: false,
+		    isUpdating: false,
+		    actualSkin: {
+		      color: '#0cc',
+		      background: 'rgba(0, 204, 204, .4)',
+		      wall: 'rgba(0, 204, 204, .15)'
+		    },
+		    skins: [
+		      {
+		        color: '#0cc', 
+		        background: 'rgba(0, 204, 204, .4)',
+		        wall: 'rgba(0, 204, 204, .15',
+		        isActive: true
+		      },
+		      {
+		        color: '#0c0', 
+		        background: 'rgba(0, 204, 0, .4)',
+		        wall: 'rgba(0, 204, 0, .15',
+		        isActive: false
+		      },
+		      {
+		        color: '#f60',
+		        background: 'rgba(255, 102, 0, .4)',
+		        wall: 'rgba(255, 102, 0, .15)',
+		        isActive: false
+		      },
+		      {
+		        color: '#f0f',
+		        background: 'rgba(255, 0, 255, .4)',
+		        wall: 'rgba(255, 0, 255, .15)',
+		        isActive: false
+		      },
+		      {
+		        color: '#e00',
+		        background: 'rgba(204, 0, 0, .2)',
+		        wall: 'rgba(204, 0, 0, .15)'
+		      }
+		    ]
+		  },
+		  computed: {
+		  	compiledOutput:function(){
+		  		document.getElementById("content").value = this.code; 
+        		return marked(this.code, {sanitize: true});
+        	} 
+		  },
+		  methods: {
+		  	toggleFull(){	 
+				this.isFull = !this.isFull				
+				document.getElementById("app").scrollIntoView();
+		  	},
+		    showSettings(){
+		      this.isSettings = ! this.isSettings;
+		      this.isSeen = false;
+		    },
+		    setSkin(skin){
+		      this.actualSkin.color = skin.color;
+		      this.actualSkin.background = skin.background;
+		      this.actualSkin.wall = skin.wall;
+		      // Toggle the actual active skin
+		      this.skins.map(function(obj){
+		        if(obj === skin){
+		          obj.isActive = true;
+		        }
+		        else{
+		          obj.isActive = false;
+		        }
+		      })
+		    },
+		    updateMe(){
+		      var ctx = this;
+		      ctx.isUpdating = true;
+		      setTimeout(function(){
+		        ctx.isUpdating = false;
+		      }, 4000);
+		    }
+		  }
+		});
+    </script>
+
+</body>
+</html>

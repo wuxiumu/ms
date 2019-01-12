@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+      <h1>{{ data.post.title }}</h1>
+      <h3>时间：{{ data.post.created_at }}</h3>
+
+      <p>{% autoescape false %}{{ data.post.content }}{% endautoescape %}</p>
+
+      <br>
+      <ul class="pager">
+            <li><a href="#">Previous</a></li>
+            <li><a href="#">Next</a></li>
+      </ul>
+      <script type="text/javascript">
+            $(document).ready(function() {
+            $("[data-id]").on("click",function(){
+                  var _id = $(this).attr("data-id")
+                  console.log(_id);                                    
+            })
+      });   
+      </script>
+{% endblock %}

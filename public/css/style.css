@@ -1,0 +1,312 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Source+Code+Pro");
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+}
+
+#app-wall {
+  min-height: 100vh;
+  padding: 5rem 0;
+  -webkit-transition: background .4s;
+  transition: background .4s;
+}
+#app-wall.full {
+  padding: 0;
+}
+#app-wall.full #app {
+  width: 100%;
+  height: calc(100vh - 40px);
+  padding: 0;
+  font-size: 100%;
+}
+
+#app {
+  width: 40rem;
+  max-width: 100%;
+  height: 400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  font-size: 70%;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+}
+
+header {
+  position: relative;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  font-size: .75em;
+  color: rgba(0, 0, 0, 0.8);
+  background: lightgray;
+  border-radius: 5px 5px 0 0;
+}
+header .buttons {
+  position: absolute;
+  top: 6px;
+  left: 22px;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 153, 0, 0.5);
+  border-radius: 50%;
+  box-shadow: -12px 0 0 rgba(204, 0, 0, 0.6), 12px 0 0 rgba(0, 204, 0, 0.4);
+}
+
+.editor {
+  position: relative;
+  min-height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+}
+.editor .code,
+.editor .result,
+.editor .settings {
+  width: 50%;
+  padding: 1rem;
+}
+.editor .code {
+  resize: none;
+  border: none;
+  font-family: "Source Code Pro", monospace;
+  background: rgba(0, 0, 0, 0.8);
+  outline: none;
+  -webkit-transition: color .4s;
+  transition: color .4s;
+}
+.editor .result {
+  background: #fff;
+}
+.editor .result hr {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.editor .result img {
+  max-width: 100%;
+  height: auto;
+}
+.editor .result ul, .editor .result ol {
+  margin-left: 0;
+  padding-left: 20px;
+}
+.editor .result ul li, .editor .result ol li {
+  margin-left: 0;
+}
+.editor .settings {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 51%;
+  height: 100%;
+  color: #fff;
+  background: #000;
+  -webkit-transform: translateX(101%);
+          transform: translateX(101%);
+  -webkit-transition: -webkit-transform .4s;
+  transition: -webkit-transform .4s;
+  transition: transform .4s;
+  transition: transform .4s, -webkit-transform .4s;
+}
+.editor .settings.active {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+}
+.editor .settings h2 {
+  position: relative;
+}
+.editor .settings h2 .fa {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+  font-size: .85em;
+  cursor: pointer;
+}
+.editor .settings h2 .fa:hover {
+  -webkit-transform: translateY(-50%) rotate(-180deg);
+          transform: translateY(-50%) rotate(-180deg);
+}
+.editor .settings h3 {
+  margin-top: 2rem;
+  padding: .25rem .2rem .2rem;
+  font-weight: normal;
+  background: rgba(255, 255, 255, 0.2);
+}
+.editor .settings .skin {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  vertical-align: middle;
+  opacity: .5;
+  -webkit-transition: opacity .4s;
+  transition: opacity .4s;
+}
+.editor .settings .skin:hover, .editor .settings .skin.active {
+  opacity: 1;
+}
+.editor .settings .search,
+.editor .settings .toggleView {
+  cursor: pointer;
+  font-size: .85em;
+}
+.editor .settings .search .fa,
+.editor .settings .toggleView .fa {
+  margin-right: .5rem;
+}
+.editor .settings .toggleView:hover .fa-window-maximize {
+  -webkit-animation: pulse 1s linear infinite;
+          animation: pulse 1s linear infinite;
+}
+.editor .settings .toggleView:hover .fa-window-restore {
+  -webkit-animation: pulse 1s linear infinite reverse;
+          animation: pulse 1s linear infinite reverse;
+}
+.editor .settings .search:hover .fa {
+  -webkit-animation: rotation 1s linear infinite;
+          animation: rotation 1s linear infinite;
+}
+.editor .settings .alert {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(255, 255, 255, 0.85);
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
+  -webkit-transition: -webkit-transform .4s;
+  transition: -webkit-transform .4s;
+  transition: transform .4s;
+  transition: transform .4s, -webkit-transform .4s;
+}
+.editor .settings .alert.updating {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+.editor .settings .alert .text {
+  padding: 1rem 1rem 1.1rem;
+  text-align: center;
+  background: #000;
+  line-height: 1.4;
+}
+
+footer {
+  position: relative;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: .75em;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.4);
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 12px 15px -8px rgba(0, 0, 0, 0.9);
+  -webkit-transition: background .4s;
+  transition: background .4s;
+}
+footer .fa {
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-transition: color .4s;
+  transition: color .4s;
+}
+footer .fa:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+footer .fa.lookme {
+  -webkit-animation: blink 1s linear infinite alternate;
+          animation: blink 1s linear infinite alternate;
+}
+
+@-webkit-keyframes blink {
+  from {
+    color: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 10px 7px rgba(255, 255, 0, 0.2);
+  }
+  to {
+    color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 10px 7px rgba(255, 255, 0, 0.8);
+  }
+}
+
+@keyframes blink {
+  from {
+    color: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 10px 7px rgba(255, 255, 0, 0.2);
+  }
+  to {
+    color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 10px 7px rgba(255, 255, 0, 0.8);
+  }
+}
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes rotation {
+  from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes pulse {
+  from {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+}
+@keyframes pulse {
+  from {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+}
