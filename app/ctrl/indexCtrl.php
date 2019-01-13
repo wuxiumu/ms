@@ -10,7 +10,12 @@ class indexCtrl extends \core\phpmsframe
 	public function index(){ 
 		$model = new \app\model\postModel();
 		$page = 0;//数组以0起始
+		if(isset($_GET['page'])){
+			$page = $_GET['page'];
+		}
 		$limit = 10;
+		$data['previous'] = $page - $limit;				
+		$data['next']     = $page + $limit;
 		$id = $model->select("posts",
 								"id", 
 								[
@@ -34,6 +39,7 @@ class indexCtrl extends \core\phpmsframe
         $this->display('index.html');
 	}
 	public function ajaxposts(){
+		echo '';die;
 		if($_SERVER['REQUEST_METHOD']=="POST"){
 
 			$model = new \app\model\postModel();
@@ -75,13 +81,71 @@ class indexCtrl extends \core\phpmsframe
 		$re = $model->getOne($id);
 		$Parsedown = new \Parsedown();
 	    $re['content'] = $Parsedown->text($re['content']);
-		$data['post'] = $re;       	 
+		$data['post'] = $re; 
+
+// 		$cid =5;//是你当前文章的编号 
+// $sql ="select * from string_find where id>$cid and book_id= $book_id order by id desc limit 0,1"; //上一篇文章 
+// $sql1 ="select * from string_find where id<$cid and book_id= $book_id order by id asc limit 0,1";//下一篇文章
+ 		$previous_id = $model->select("posts",
+					"id", 
+					[
+						"id[>]" => $re['id'],
+						"pid" => $re['pid'],
+						"LIMIT" => [0,1],
+						"ORDER" => ["id" => "DESC"]
+					]
+				);
+ 		$next_id = $model->select("posts",
+					"id",					
+					[	"id[<]" => $id,	
+						"pid" => $re['pid'],				
+						"LIMIT" => [0,1],
+						"ORDER" => ["id" => "DESC"]
+					]
+				); 	
+ 		if(!empty($previous_id)){
+ 			$data['previous_id']=$previous_id['0'];
+ 		}
+ 	    if(!empty($next_id)){
+ 	    	$data['next_id']=$next_id['0'];
+ 		} 		
 		$this->assign('data',$data);
         $this->display('postinfo.html');
 	}
 	//文章分类
-	public function term(){	 
-	    $data =  [];   
+	public function term(){
+	    $pid = $_GET['id'];
+	    $pid = 0;
+	    $page = 0;
+	    $limit = 2;
+	    if(isset($_GET['page'])){
+	    	$page = $_GET['page'];	
+	    }	    
+		$data['previous'] = $page - $limit;				
+		$data['next']     = $page + $limit;
+		$model = new \app\model\postModel();		
+		$id = $model->select("posts",
+								"id", 
+								[
+									"LIMIT" => [$page , $limit],
+									"ORDER" => ["id" => "DESC"]
+								]
+							);//根据分页获取ID
+		$list = $model->select("posts",
+								   "*",
+								   [	
+									   "id" => $id,
+									   "ORDER" => ["id" => "DESC"]
+								   ]
+								);//请求数据库数据		
+		$re = [];
+	    if(!empty($list)){
+	    	$re = $list;
+	    }	    	    
+		foreach ($re as $key => $value) {
+			$re[$key]['content'] = mb_substr($value['content'],0,300,'utf-8');  
+		}
+	    $data['posts'] =  $re;   
     	$this->assign('data',$data);
         $this->display('indexterm.html');
 	}

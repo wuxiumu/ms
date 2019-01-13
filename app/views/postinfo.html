@@ -8,8 +8,13 @@
 
       <br>
       <ul class="pager">
-            <li><a href="#">Previous</a></li>
-            <li><a href="#">Next</a></li>
+            {% if data.previous_id > 0 %}
+            <li><a href="/index.php/index/postinfo/id/{{ data.previous_id }}">上一个</a></li>
+            {% endif %}
+
+            {% if data.next_id > 0 %}
+            <li><a href="/index.php/index/postinfo/id/{{ data.next_id }}">下一个</a></li>
+            {% endif %}
       </ul>
       <script type="text/javascript">
             $(document).ready(function() {
