@@ -17,7 +17,8 @@
             {% endif %}
       </ul>
       <script type="text/javascript">
-            $(document).ready(function() {
+      $(document).ready(function() {
+            $("table").addClass("table"); 
             $("[data-id]").on("click",function(){
                   var _id = $(this).attr("data-id")
                   console.log(_id);                                    
