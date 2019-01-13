@@ -17,7 +17,12 @@ class editCtrl extends \core\phpmsframe
 	}
 	//文章添加
 	public function add(){ 
-    	$this->assign('title','文章添加');
+		$data['post'] = $re['post']['pid']=0;	
+		$termModel = new \app\model\termModel();
+		$reterm = $termModel->lists(); 
+		$reterm = $this->recursion($reterm,0);	
+		$data['terms'] = $reterm;
+    	$this->assign('data',$data);
         $this->display('posts/add.html');
 	}
 	//添加行为
