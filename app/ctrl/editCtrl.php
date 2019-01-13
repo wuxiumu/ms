@@ -92,7 +92,12 @@ class editCtrl extends \core\phpmsframe
         $model = new \app\model\termModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);	
-		$data['terms'] = $re;		 
+		$data['terms'] = $re;	
+		$data['currentPage'] = 1;
+		if(isset($_GET['page'])){
+			$data['currentPage'] = $_GET['page'];
+		}
+		$data['totalPages'] = 100;	
     	$this->assign('data',$data);
         $this->display('posts/termlist.html');
 	}
@@ -145,9 +150,33 @@ class editCtrl extends \core\phpmsframe
 
 	//文章列表
 	public function index(){ 
+		$limit = 10;
+		$data['currentPage'] = 1;
+		if(isset($_GET['page'])){
+			$data['currentPage'] = $_GET['page'];
+		}
+		$_limt = ($data['currentPage']-1)*$limit;
+		$data['numberOfPages'] = $limit;	
 		$model = new \app\model\postModel();
-		$re = $model->lists();		
-    	$this->assign('posts',$re);
+		$data['totalPages'] = ceil($model->count("posts", "id")/$limit);
+	    $id = $model->select("posts",
+								"id", 
+								[
+									"ORDER" => ["id" => "DESC"],
+									"LIMIT" => [$_limt, $limit]
+								]
+							);//根据分页获取ID
+		$re = $model->select("posts",
+								   "*",
+								   [	
+								   	   "ORDER" => ["id" => "DESC"],
+									   "id" => $id
+								   ]
+								);//请求数据库数据
+
+
+		$data['posts'] = $re;		
+    	$this->assign('data',$data);
         $this->display('posts/list.html');
 	}
 

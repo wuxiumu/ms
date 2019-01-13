@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/public/tool/bootstrap3table/bootstrap.min.css">   
 	<script src="/public/tool/bootstrap3table/jquery.min.js"></script>
 	<script src="/public/tool/bootstrap3table/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/public/tool/bootstrap3table/bootstrap-paginator.js"></script>
 </head>
 <body>
 <div class="container">
@@ -22,10 +23,10 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for val in posts %}
+		{% for val in data.posts %}
 		<tr>
-			<td><label><input type="checkbox" name="step" value="1">{{ val.id }}</label></td>
-			<td>{{ val.title }}</td>
+			<td><label><input type="checkbox" name="step" value="{{ val.id }}">{{ val.id }}</label></td>
+			<td><a href="/index.php/index/postinfo/id/{{ val.id }}">{{ val.title }}</a></td>
 			<td>{{ val.description }}</td>
 			<td>
 				<a href="/index.php/edit/mod/id/{{ val.id }}"><button type="button" class="btn btn-default" >
@@ -44,8 +45,27 @@
 			</td>
 		</tr>
 		{% endfor %}		
-	</tbody>
+	</tbody>	
 </table>
+
+	<div id="example"></div>
+	<script type="text/javascript">
+		 
+
+    var options = {
+            currentPage: {{ data.currentPage }},
+            totalPages: {{ data.totalPages }},
+            numberOfPages:{{ data.numberOfPages }},
+            pageUrl: function(type, page, current){                
+            	return "/index.php/edit/index/page/"+page;
+            }	
+    }
+ 
+
+    $('#example').bootstrapPaginator(options);    
+    $('#example ul').addClass('pagination');
+	</script>
+
 </div>
 </body>
 </html>
