@@ -82,10 +82,6 @@ class indexCtrl extends \core\phpmsframe
 		$Parsedown = new \Parsedown();
 	    $re['content'] = $Parsedown->text($re['content']);
 		$data['post'] = $re; 
-
-// 		$cid =5;//是你当前文章的编号 
-// $sql ="select * from string_find where id>$cid and book_id= $book_id order by id desc limit 0,1"; //上一篇文章 
-// $sql1 ="select * from string_find where id<$cid and book_id= $book_id order by id asc limit 0,1";//下一篇文章
  		$previous_id = $model->select("posts",
 					"id", 
 					[
@@ -115,7 +111,6 @@ class indexCtrl extends \core\phpmsframe
 	//文章分类
 	public function term(){
 	    $pid = $_GET['id'];
-	    $pid = 0;
 	    $page = 0;
 	    $limit = 2;
 	    if(isset($_GET['page'])){
@@ -127,6 +122,7 @@ class indexCtrl extends \core\phpmsframe
 		$id = $model->select("posts",
 								"id", 
 								[
+									"pid"=>$pid,
 									"LIMIT" => [$page , $limit],
 									"ORDER" => ["id" => "DESC"]
 								]
