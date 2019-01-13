@@ -113,7 +113,7 @@ class indexCtrl extends \core\phpmsframe
 	public function term(){
 	    $pid = $_GET['id'];
 	    $page = 0;
-	    $limit = 2;
+	    $limit = 10;
 	    if(isset($_GET['page'])){
 	    	$page = $_GET['page'];	
 	    }	    
