@@ -15,7 +15,7 @@ class postModel extends model
 
 	public function findpost($where)
 	{
-		$columns = ['id','title','contnet'];
+		$columns = ['id','pid','title','uid','contnet','description','created_at','updated_at'];
 		return $this->get($this->table,$columns,$where);		 		 
 	}
 

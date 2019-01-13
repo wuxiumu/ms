@@ -1,24 +1,54 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<div id="maincontent">
       {% for val in data.posts %}
-      <a href="/index.php/index/postinfo/id/{{ val.id }}">
-      <div data-id="{{ val.id }}">
+      <a href="/index.php/index/postinfo/id/{{ val.id }}" style="text-decoration:none; color:#333; ">
+      <div data-id="{{ val.id }}" class="item">
             <h2>{{ val.title }}</h2>
             <h5>{{ val.description }}</h5>
             <div><img src="/public/img/bixin.jpg" width="30%"></div>
-            <p>{{ val.created_at }} - </p>
+            <p>{{ val.created_at }} - {{ val.updated_at }} </p>
             <p>{{ val.content }}</p>
             <br>
       </div>
       </a>
       {% endfor %}
+ </div>      
       <script type="text/javascript">
             $(document).ready(function() {
-            $("[data-id]").on("click",function(){
-                  var _id = $(this).attr("data-id")
-                  console.log(_id);                                    
-            })
-      });   
+                  $("[data-id]").on("click",function(){
+                        var _id = $(this).attr("data-id") 
+                  })
+            });   
+            $(window).scroll(function () {
+                var scrollerh = $(document).scrollTop();
+                //console.log(scrollerh);
+                var viewbody = $(window).height();
+                var allbody  = $(document).height();
+                var page = $('.item').length;
+                if (scrollerh + viewbody > allbody - 100) {
+                    Getdatasource(page,2)               
+                }
+            }) 
+
       </script>
+      <script>
+        //ajax后台获得数据
+        function Getdatasource(page,limit) {            
+            $.ajax({
+                url: "/index.php/index/ajaxposts",
+                type: "post",
+                dataType: "html",
+                async: true,
+                data: {
+                    page: page,
+                    limit: limit
+                },
+                success: function (res) {
+                  $('#maincontent').append(res);                  
+                }
+            });
+        }
+      </script>       
 {% endblock %}
