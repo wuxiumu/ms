@@ -12,7 +12,7 @@ class conf
 		 * 2.判断配置是否存在
 		 * 3.缓存配置
 		 */
-		$file = PHPMSFRAME.'\core\config\\'.$file.'.php';		
+		$file = PHPMSFRAME.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.$file.'.php';		
 		if(isset(self::$conf[$file])){
 			return self::$conf[$file][$name];
 		}else{			
@@ -32,7 +32,7 @@ class conf
 	}
 
 	static public function all($file){
-		$file = PHPMSFRAME.'\core\config\\'.$file.'.php';		
+		$file = PHPMSFRAME.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.$file.'.php';		
 		if(isset(self::$conf[$file])){
 			return self::$conf[$file];
 		}else{			
