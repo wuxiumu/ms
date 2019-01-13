@@ -19,6 +19,19 @@
 
 <form role="form" action="/index.php/edit/add_action" method="post">
 	<div class="form-group">
+		<label for="title">父级类</label>		 
+		<select class="form-control" name="pid">
+			<option value="0">顶级</option>
+			{% for val in data.terms %}
+			<option value="{{ val.id }}"
+				{% if data.post.pid == val.id %}
+				  selected="selected" 
+				{% endif %}>{{ val.name }}
+			</option>
+			{% endfor %}	
+		</select>
+	</div>
+	<div class="form-group">
 		<label for="title">标题</label>
 		<input type="text" id="title" class="form-control title" rows="1" name="title" value="{{ data.post.title }}">
 	</div>
@@ -127,6 +140,7 @@
 
 	</script>
     <script>
+    	var _content = $("#content").val();
     	/**
 		 * ROOT COMPONENT
 		 */
@@ -134,7 +148,7 @@
 		  el: '#app-wall',
 		  data: {
 		    appTitle: 'VueDown Editor',
-		    code: '{{ data.post.content }}',
+		    code: _content,
 		    isSeen: true,
 		    isSettings: false,
 		    isFull: false,
