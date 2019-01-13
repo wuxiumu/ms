@@ -10,7 +10,7 @@ class indexCtrl extends \core\phpmsframe
 	public function index(){ 
 		$model = new \app\model\postModel();
 		$page = 0;//数组以0起始
-		$limit = 2;
+		$limit = 10;
 		$id = $model->select("posts",
 								"id", 
 								[
@@ -34,36 +34,40 @@ class indexCtrl extends \core\phpmsframe
         $this->display('index.html');
 	}
 	public function ajaxposts(){
-	    $model = new \app\model\postModel();
-		$page  = $_POST['page']; 
-		$limit = $_POST['limit'];
-		$id = $model->select("posts",
-								"id", 
-								[
-									"ORDER" => ["id" => "DESC"],
-									"LIMIT" => [$page , $limit],				
-								]
-							);//根据分页获取ID
-		$list = $model->select("posts",
-								   "*",
-								   [	
-									   "id" => $id,
-									   "ORDER" => ["id" => "DESC"]
-								   ]
-								);//请求数据库数据
-	    if(empty($list)){
-	    	echo '';
-		}else{			
-			$re = $list;
-			foreach ($re as $key => $value) {
-				$re[$key]['content'] = mb_substr($value['content'],0,300,'utf-8');  
-			}		
-			$data['posts'] = $re;
-	    	$this->assign('data',$data);
-	        $this->display('ajax/index.html');
-		}
-	}
+		if($_SERVER['REQUEST_METHOD']=="POST"){
 
+			$model = new \app\model\postModel();
+			$page  = $_POST['page'] ? $_POST['page'] : 1; 
+			$limit = $_POST['limit'];
+			$pid   = $_POST['pid'] ? $_POST['pid'] : 0;
+			$id = $model->select("posts",
+									"id", 
+									[									
+										"pid[=]" => $pid,
+										"LIMIT" => [$page , $limit] 		
+									]
+								);//根据分页获取ID
+			$list = $model->select("posts",
+									   "*",
+									   [	
+										   "id" => $id
+									   ]
+									);//请求数据库数据
+		    if(empty($list)){
+		    	echo '';
+			}else{			
+				$re = $list;
+				foreach ($re as $key => $value) {
+					$re[$key]['content'] = mb_substr($value['content'],0,300,'utf-8');  
+				}		
+				$data['posts'] = $re;
+		    	$this->assign('data',$data);
+		        $this->display('ajax/index.html');
+			}
+		 }else {
+		   echo "submit is no come~";
+	    }	    
+	}
 	//文章详情
 	public function postinfo(){
 	    $id =  $_GET['id'];
@@ -76,13 +80,27 @@ class indexCtrl extends \core\phpmsframe
         $this->display('postinfo.html');
 	}
 	//文章分类
-	public function term(){
-	    echo 1;
+	public function term(){	 
+	    $data =  [];   
+    	$this->assign('data',$data);
+        $this->display('indexterm.html');
 	}
 	//文章搜索
 	public function search(){  
     	 
 	}
-
+	/**
+	 * 是否是GET提交的
+	 */
+	function isGet(){
+	  return $_SERVER['REQUEST_METHOD'] == 'GET' ? true : false;
+	}
+	/**
+	 * 是否是POST提交
+	 * @return int
+	 */
+	function isPost() {
+	  return ($_SERVER['REQUEST_METHOD'] == 'POST' && checkurlHash($GLOBALS['verify']) && (empty($_SERVER['HTTP_REFERER']) || preg_replace("~https?:\/\/([^\:\/]+).*~i", "\\1", $_SERVER['HTTP_REFERER']) == preg_replace("~([^\:]+).*~", "\\1", $_SERVER['HTTP_HOST']))) ? 1 : 0;
+	}
      
 }
