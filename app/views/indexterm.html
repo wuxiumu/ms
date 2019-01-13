@@ -16,9 +16,9 @@
       {% endfor %}
       <ul class="pager">
         {% if data.previous >= 0 %}
-        <li class="previous"><a href="/index.php/index/term/id/1/page/{{ data.previous }}">&larr; 上一页</a></li>
+        <li class="previous"><a href="/index.php/index/term/id/{{data.pid}}/page/{{ data.previous }}">&larr; 上一页</a></li>
         {% endif %}
-        <li class="next"><a href="/index.php/index/term/id/1/page/{{ data.next }}">下一页 &rarr;</a></li>
+        <li class="next"><a href="/index.php/index/term/id/{{data.pid}}/page/{{ data.next }}">下一页 &rarr;</a></li>
       </ul> 
  </div>      
       <script type="text/javascript">

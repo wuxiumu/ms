@@ -7,7 +7,8 @@ use core\lib\model;
 class indexCtrl extends \core\phpmsframe
 {	
 	//首页 文章列表
-	public function index(){ 
+	public function index(){
+	    session_start(); 		
 		$model = new \app\model\postModel();
 		$page = 0;//数组以0起始
 		if(isset($_GET['page'])){
@@ -116,6 +117,7 @@ class indexCtrl extends \core\phpmsframe
 	    if(isset($_GET['page'])){
 	    	$page = $_GET['page'];	
 	    }	    
+	    $data['pid'] = $pid;
 		$data['previous'] = $page - $limit;				
 		$data['next']     = $page + $limit;
 		$model = new \app\model\postModel();		

@@ -131,22 +131,21 @@
         
         //点击重置按钮时，通过trigger()来触发文本框的失去焦点事件
         $("#send").click(function(){
-            var falg = false;
+            var falg = true;
             //trigger 事件执行完后，浏览器会为submit按钮获得焦点
             $("form .required:input").trigger("blur"); 
             $(".required").each(function(){
                     var name = $(this).attr("name");
                     if($(this).val()==""){
                         alert($(this).attr('name')+"不能为空");
-                    }else{
-                        falg = true;
-                    }                  
+                        falg = false;return falg;
+                    }                
             }) 
-            return falg;
+            //return falg;
             if(falg){
-                alert("注册成功！");
-            }else{
-                alert("0");
+                //alert("注册成功！");
+            }else{                
+                return falg;
             }  
             
         });

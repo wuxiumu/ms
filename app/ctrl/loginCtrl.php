@@ -19,8 +19,15 @@ class loginCtrl extends \core\phpmsframe
     public function user_register_action(){
     	//验证token
     	session_start();    	
-    	$arr = $_POST;    	
-    	unset($arr['code']);unset($arr['token']);
+    	$arr = $_POST;     	
+    	if($_SESSION['token']!=$_POST['token']){
+    		js_u('/index.php/login/user_register#register');exit;
+    	}
+    	unset($arr['token']);
+    	if($_COOKIE['phrase']!=$_POST['code']){
+    		js_u('/index.php/login/user_register#register',3,'验证码有误');exit;
+    	}    	
+    	unset($arr['code']); 
     	$arr['password'] = $this->encrypt($_POST['password']);
     	$time = date("Y-m-d H:i:s",time());  
 		$arr['created_at'] = $time;
@@ -29,7 +36,7 @@ class loginCtrl extends \core\phpmsframe
 		$re = $model->adduser($arr);		
 		$error_arr = $re->errorInfo();
 		if($error_arr['0']=='00000'){
-		   js_u('/index.php/login/user');
+		   js_u('/index.php/login/user#login',3,'注册成功');
 		}else{
 		   dump($error_arr);         				
 		}
@@ -43,6 +50,14 @@ class loginCtrl extends \core\phpmsframe
     	$this->display('userlogin.html');
     }
     public function user_login_action(){
+    	session_start();
+    	if($_SESSION['token']!=$_POST['token']){
+    		js_u('/index.php/login/user#login');exit;
+    	}
+    	unset($_POST['token']);
+    	if($_COOKIE['phrase']!=$_POST['code']){
+    		js_u('/index.php/login/user#login',3,'验证码有误');exit;
+    	}
     	$name = $_POST['name'];
     	$model = new \app\model\userModel();
 		$re = $model->finduser(['name'=>$name]);
@@ -55,7 +70,6 @@ class loginCtrl extends \core\phpmsframe
 			}
 		}
     	if($flag){
-    		session_start();
     		unset($re['password']);
     		$user = $re;
     		$user['login_status'] = 1;

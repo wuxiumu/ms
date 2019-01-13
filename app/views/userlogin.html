@@ -9,6 +9,7 @@
   </style>
   <h2 id="login"  >用户登录：{{ token }}</h2>
   <form class="form-horizontal" role="form"  action="/index.php/login/user_login_action" method="post">
+    <input type="hidden" name="token" value="{{ token }}">
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">账号</label>
       <div class="col-sm-10">
