@@ -1,12 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <style>
-    .fakeimg {
-        height: 200px;
-         background: #aaa;
-    }
-  </style>
   <h2 id="login"  >用户登录：{{ token }}</h2>
   <form class="form-horizontal" role="form"  action="/index.php/login/user_login_action" method="post">
     <input type="hidden" name="token" value="{{ token }}">
