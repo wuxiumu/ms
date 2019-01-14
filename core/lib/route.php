@@ -25,7 +25,9 @@ class route
 					$this->ctrl = conf::get('CTRL','route');
 					$this->action = conf::get('ACTION','route');
 					return;
-				} 					
+				} 							
+			}else{
+				$path = trim($path,'/');				
 			}			 
 			$patharr = explode('/', $path) ;
 			if(count($patharr)%2!=0){
