@@ -26,7 +26,27 @@ Flight::route('GET /api.php', function(){
 });
 
 Flight::route('POST /api.php', function(){
-    echo 'post过来会飞的php微型框架';
+    p($_POST);
+});
+
+Flight::route('PUT /api.php', function(){
+    echo 'put请求专注于update操作';
+});
+
+Flight::route('DELETE /api.php', function(){
+    echo 'DELETE';
+});
+
+Flight::route('HEAD /api.php', function(){
+    echo 'HEAD';
+});
+
+Flight::route('OPTIONS /api.php', function(){
+    echo 'OPTIONS';
+});
+
+Flight::route('PATCH /api.php', function(){
+    echo 'PATCH';
 });
 
 Flight::route('/api.php/@name/@id:[0-9]+', function($name, $id){
