@@ -17,7 +17,8 @@ class editCtrl extends \core\phpmsframe
 	}
 	//文章添加
 	public function add(){ 
-		$data['post'] = $re['post']['pid']=0;	
+		$data['post'] = [];
+		$data['post']['created_at'] = date("Y-m-d H:i:s",time());	
 		$termModel = new \app\model\termModel();
 		$reterm = $termModel->lists(); 
 		$reterm = $this->recursion($reterm,0);	
@@ -34,13 +35,13 @@ class editCtrl extends \core\phpmsframe
 		$model = new \app\model\postModel();
 		if(empty($arr['id'])){
 			unset($arr['id']);
-			$arr['created_at'] = $time;
 			$re = $model->addpost($arr);					
 		}else{
 			$id = $arr['id'];
-			unset($arr['id']); 
+			unset($arr['id']);
 			$re = $model->updateOne($id,$arr);
 		}
+
 		$error_arr = $re->errorInfo();
         if($error_arr['0']=='00000'){
 		   js_u('/index.php/edit/index');
