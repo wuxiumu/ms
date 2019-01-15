@@ -19,6 +19,6 @@ define('CORE',PHPMSFRAME.'/core');
 
 require CORE.'/flight/Flight.php';
 Flight::route('/api.php', function(){
-	echo json_encode($_SERVER);    
+	echo '一个会飞的php微型框架';    
 });
 Flight::start();
