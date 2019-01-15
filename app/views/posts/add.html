@@ -43,6 +43,7 @@
 		<label for="name">内容</label>
 		<textarea id="content" class="form-control" rows="3" name="content">{{ data.post.content }}</textarea>		
 		<input class="btn btn-default" type="button" value="预览切换" onclick="showapp()">
+		<input class="btn btn-default" type="button" value="预览编辑" onclick="editorapp()">
 	</div>
 	<div class="form-group">
 		<label for="name">时间 </label>
@@ -96,7 +97,7 @@
  
 </div>
   <div id="app" style="display: none;">
-    <header @click="toggleFull">标题
+    <header @click="toggleFull">{{ data.post.title }}
       <div class="buttons"></div>
     </header>
     <div class="editor"> 
@@ -121,7 +122,11 @@
 	<script src='/public/js/marked.min.js'></script>
 	<script>
 		function showapp(){
-			$("#app").toggle();
+			$("#app").toggle(99);			
+		}
+		function editorapp(){
+			$("#app").show(99);
+			document.getElementById("app").scrollIntoView();
 		}
 		$(document).ready(function(){
 		    var $input_title = $("#title");
