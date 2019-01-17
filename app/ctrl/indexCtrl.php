@@ -143,7 +143,7 @@ class indexCtrl extends \core\phpmsframe
 		foreach ($re as $key => $value) {
 			$re[$key]['content'] = mb_substr($value['content'],0,300,'utf-8');  
 		}
-	    $data['posts'] =  $re;   
+		$data['posts'] =  $re;   		
     	$this->assign('data',$data);
         $this->display('indexterm.html');
 	}

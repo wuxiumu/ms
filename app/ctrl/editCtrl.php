@@ -31,7 +31,18 @@ class editCtrl extends \core\phpmsframe
 	    $arr = $_POST;		
     	$time = date("Y-m-d H:i:s",time());  		
         $arr['updated_at'] = $time;
-        $arr['uid'] = $_SESSION['user']['id'];
+		$arr['uid'] = $_SESSION['user']['id'];
+		$model = new \app\model\termModel();
+	    if($arr['pid'] =='0' ){
+	        $arr['path'] = '0';
+	    }else{
+	    	$tmp = $model->getOne($arr['pid']);
+	    	if($tmp['pid']=!0){
+	    		$arr['path'] = $tmp['path'].'-'.$tmp['id'];
+	    	}else{
+	    		$arr['path'] = '0-'.$arr['pid'];	
+	    	}	    	
+	    }
 		$model = new \app\model\postModel();
 		if(empty($arr['id'])){
 			unset($arr['id']);
@@ -151,22 +162,39 @@ class editCtrl extends \core\phpmsframe
 
 	//文章列表
 	public function index(){ 
-		$limit = 10;
-		$data['currentPage'] = 1;
+		$model = new \app\model\termModel();
+		$re = $model->lists(); 
+		$re = $this->recursion($re,0);	
+		$data['terms'] = $re;
+		$pid    =  0;
+		$page   =  0; 
+		$limit  = 10;
+		$data['currentPage'] = 1;		
 		if(isset($_GET['page'])){
 			$data['currentPage'] = $_GET['page'];
 		}
-		$_limt = ($data['currentPage']-1)*$limit;
+		$page = ($data['currentPage']-1)*$limit;
 		$data['numberOfPages'] = $limit;	
 		$model = new \app\model\postModel();
-		$data['totalPages'] = ceil($model->count("posts", "id")/$limit);
+		$conf = [					
+			"ORDER" => ["id" => "DESC"],
+			"LIMIT" => [$page, $limit]
+		];
+		$data['totalPages'] = ceil($model->count("posts","id")/$limit);
+		if(isset($_GET['pid'])){
+			if($_GET['pid']!='0'){
+				$data['pid'] = $_GET['pid'];
+				$pid         = $_GET['pid'];
+				$conf['pid'] = $pid;						
+				$data['totalPages'] = ceil($model->count("posts",[ 
+					'pid' => $pid  
+				])/$limit);
+			}
+		}
 	    $id = $model->select("posts",
 								"id", 
-								[
-									"ORDER" => ["id" => "DESC"],
-									"LIMIT" => [$_limt, $limit]
-								]
-							);//根据分页获取ID
+								$conf
+							);//根据分页获取ID							
 		$re = $model->select("posts",
 								   "*",
 								   [	
@@ -174,9 +202,7 @@ class editCtrl extends \core\phpmsframe
 									   "id" => $id
 								   ]
 								);//请求数据库数据
-
-
-		$data['posts'] = $re;		
+		$data['posts'] = $re;								
     	$this->assign('data',$data);
         $this->display('posts/list.html');
 	}

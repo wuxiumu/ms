@@ -14,7 +14,19 @@
 
 
 <table class="table table-striped">
-	<caption>文章列表<a href="/index.php/edit/add">&nbsp;+添加</a></caption>
+	<caption>文章列表
+	<label for="title">分类</label>		 
+		<select id="select_table" name="pid" width="30%">
+			<option value="0">顶级</option>
+			{% for val in data.terms %}
+			<option value="{{ val.id }}"
+				{% if data.pid == val.id %}
+				  selected="selected" 
+				{% endif %}>{{ val.name }}
+			</option>
+			{% endfor %}	
+		</select>
+	<a href="/index.php/edit/add">&nbsp;+添加</a></caption>
 	<thead>
 		<tr>
 			<th>id</th>
@@ -51,14 +63,24 @@
 
 	<div id="example"></div>
 	<script type="text/javascript">
-		 
+    var baseUrl = "/index.php/edit/index";
+	{% if data.pid > 0 %}
+		baseUrl = baseUrl+"/pid/"+{{data.pid}}
+	{% endif %}
+	
+	$(function(){
+		$("#select_table").change(function(){
+			var typeCodePre =  $("#select_table").val();
+			window.location.href = "/index.php/edit/index/pid/"+typeCodePre
+		})
+	})
 
     var options = {
             currentPage: {{ data.currentPage }},
             totalPages: {{ data.totalPages }},
             numberOfPages:{{ data.numberOfPages }},
             pageUrl: function(type, page, current){                
-            	return "/index.php/edit/index/page/"+page;
+            	return baseUrl+"/page/"+page;
             }	
     }
  
