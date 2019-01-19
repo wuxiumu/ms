@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"> 
-	<title>phpms微型框架开发的blog-记录面试-记录生活</title>
-  <meta name="keywords" content="php框架,phpms框架，web应用，phpms开发网站，phpms开发个人blog，简洁开发，快速开发,开源框架,开发框架,MVC,php frame,phpms的flight引擎专为api而生 "/>
-  <meta name="description" content="phpms框架 - 是由吴庆宝开发维护的MVC结构的开源PHP框架，遵循Apache2开源协议发布，是为了敏捷WEB应用开发和简化企业及个人应用开发而诞生的。"/>
+	<meta charset="utf-8"> 	
+  {% block head %}       {% endblock %}  
   <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
   <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
-
   <script src="/public/tool/makewebsite/bootstrap.min.js"></script>
   <link rel="stylesheet" href="/public/tool/highlightjs/styles/github.css">
   <script src="/public/tool/highlightjs/highlight.pack.js"></script>
@@ -26,12 +23,6 @@ background:url(/public/img/zsxl.jpg) no-repeat 5px 5px;background-position:cente
   <h1>一个phper,笔试,面试,技术栈的总结</h1>
   <p>powerby flight phpms </p>
   <p>我在找一份php开发相关的工作， 兼职全职都可以，有意向的可以邮箱我</p>
-  <!-- <p>一个单身狗的跟你解释const 常量 <br> 
-1.在定义时必须被初始值<br> 
-2.前面不加任何修饰符....<br>
-3.变量名字母一般都大写<br>
-4.常量可以被子类继承....<br>
-5.一个常量是属于一个类的，而不是某个对象的</p> --> 
 </div>
 
 <nav class="navbar navbar-inverse">
@@ -50,6 +41,7 @@ background:url(/public/img/zsxl.jpg) no-repeat 5px 5px;background-position:cente
         <li><a href="/index.php/index/term/id/1">笔试</a></li>
         <li><a href="/index.php/index/term/id/2">面试</a></li>
         <li><a href="/index.php/index/term/id/4">新技能</a></li>
+        <li><a href="/index.php/index/term/id/15">go</a></li>
         <li><a href="/index.php/index/term/id/6">头疼的算法</a></li>
         <li><a href="/index.php/index/term/id/7">有趣的数据结构</a></li>
         <li><a href="/index.php/index/term/id/14">微习惯</a></li> 

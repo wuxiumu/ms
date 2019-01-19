@@ -12,13 +12,23 @@
 
 而且php几乎是每一年跟新一次，关联的新技术也是层出不穷,各种唱衰php的声音也没有断过。
 
-我觉得作为web开发，php就是时间上最好的语言，是她让我感受到创造的价值，开发的乐趣。
+我觉得作为web开发，php就是web开发最好的语言，是她让我感受到创造的价值，开发的乐趣。
 
 # phpms 框架
 
 自己写了个PHP的框架，访问地址ms.meiyoufan.com
 
 这是框架的源码，网站我会明天更新。
+
+## 框架启动
+确保php 和 composer 运行正常
+```
+composer update 
+php -S localhost:8000
+```
+
+在windwo下点击 w_start_web.bat 文件
+
 
 
 #  框架目录一览

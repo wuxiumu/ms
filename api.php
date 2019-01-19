@@ -16,7 +16,7 @@
 
 define('PHPMSFRAME',__DIR__);         
 define('CORE',PHPMSFRAME.'/core');
-
+ 
 include CORE.'/common/function.php';
 
 require CORE.'/flight/Flight.php';

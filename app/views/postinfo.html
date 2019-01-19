@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 
+{% block head %}
+    <title>{{ data.post.title }}-phpms</title>
+    <meta name="keywords" content="php框架,phpms框架，web应用，phpms开发网站，phpms开发个人blog，简洁开发，快速开发,开源框架,开发框架,MVC,php frame,phpms的flight引擎专为api而生 "/>
+    <meta name="description" content="{{ data.post.description }}"/>
+{% endblock %} 
+
 {% block content %}
       <h1>{{ data.post.title }}</h1>
       <h3>时间：{{ data.post.created_at }}</h3>
@@ -7,6 +13,31 @@
       <p>{% autoescape false %}{{ data.post.content }}{% endautoescape %}</p> 
 
       <br>
+       {% for val in data.comments %}
+
+        <div class="container">
+
+        
+
+        <div class="row" >
+            <div class="col-md-6" 
+                style="background-color: #dedef8;box-shadow: 
+                inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+                <p>{% autoescape false %}{{ val.content }}{% endautoescape %}</p> 
+                <span style="float: right; margin-right: 20px;">by  {{ val.nickname }}</span>
+            </div>
+        </div>
+        </div>
+       {% endfor %}
+        <form role="form" action="/index.php/index/comment" method="post">
+            <div class="form-group">
+                <label for="name">评论</label>
+                <input type="hidden" name="post_id" value="{{ data.post.id }}">
+                <textarea class="form-control" rows="3" name="content"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">提交</button>
+            <span class="help-block"> &nbsp;仅对管理员开放,支持markdown语法</span>
+        </form>
       <ul class="pager">
             {% if data.previous_id > 0 %}
             <li><a href="/index.php/index/postinfo/id/{{ data.previous_id }}">上一个</a></li>
@@ -22,7 +53,27 @@
                   <img id="bigimg" style="border:5px solid #fff;" src="" />
             </div>
       </div> 
+        
+        <!--PC版-->
+        <div id="SOHUCS" sid="{{ data.post.id }}"></div>
+        <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+        <script type="text/javascript">
+            window.changyan.api.config({
+            appid: 'cyu2AKmwk',
+            conf: 'prod_ceb827ff12cea5bef07bc1406952f4b6'
+            });
+        </script>
 
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+<div id="cyReping" sid="{{ data.post.id }}" role="cylabs" data-use="reping"></div>
+
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cyu2AKmwk"></script>
+     
       <script type="text/javascript">
       $(document).ready(function() {
             $("table").addClass("table table-bordered table-striped");

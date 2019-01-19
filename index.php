@@ -20,7 +20,7 @@ define('APP',PHPMSFRAME.'/app');
 define('MODULE','app');
 
 define('DEBUG',true);
-
+ 
 include "vendor/autoload.php";
 
 if(DEBUG){

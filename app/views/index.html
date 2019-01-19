@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 
+{% block head %} 
+    <title>phpms微型框架开发的blog-记录面试-记录生活</title>
+    <meta name="keywords" content="php框架,phpms框架，web应用，phpms开发网站，phpms开发个人blog，简洁开发，快速开发,开源框架,开发框架,MVC,php frame,phpms的flight引擎专为api而生 "/>
+    <meta name="description" content="phpms框架 - 是由吴庆宝开发维护的MVC结构的开源PHP框架，遵循Apache2开源协议发布，是为了敏捷WEB应用开发和简化企业及个人应用开发而诞生的。"/>
+{% endblock %}
+
 {% block content %}
 <div id="maincontent">
       {% for val in data.posts %}
@@ -20,41 +26,5 @@
         {% endif %}
         <li class="next"><a href="/index.php/index/index/page/{{ data.next }}">下一页 &rarr;</a></li>
       </ul>      
- </div>      
-      <script type="text/javascript">
-            $(document).ready(function() {
-                  $("[data-id]").on("click",function(){
-                        var _id = $(this).attr("data-id") 
-                  })
-            });   
-            $(window).scroll(function () {
-                var scrollerh = $(document).scrollTop();
-                //console.log(scrollerh);
-                var viewbody = $(window).height();
-                var allbody  = $(document).height();
-                var page = $('.item').length;
-                if (scrollerh + viewbody > allbody - 100) {
-                    //Getdatasource(page,1)               
-                }
-            }) 
-
-      </script>
-      <script>
-        //ajax后台获得数据
-        function Getdatasource(page,limit) {            
-            $.ajax({
-                url: "/index.php/index/ajaxposts",
-                type: "post",
-                dataType: "html",
-                async: true,
-                data: {
-                    page: page,
-                    limit: limit
-                },
-                success: function (res) {
-                  $('#maincontent').append(res);                  
-                }
-            });
-        }
-      </script>       
+ </div>                
 {% endblock %}

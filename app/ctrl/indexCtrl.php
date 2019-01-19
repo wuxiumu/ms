@@ -40,40 +40,7 @@ class indexCtrl extends \core\phpmsframe
         $this->display('index.html');
 	}
 	public function ajaxposts(){
-		echo '';die;
-		if($_SERVER['REQUEST_METHOD']=="POST"){
-
-			$model = new \app\model\postModel();
-			$page  = $_POST['page'] ? $_POST['page'] : 1; 
-			$limit = $_POST['limit'];
-			$pid   = $_POST['pid'] ? $_POST['pid'] : 0;
-			$id = $model->select("posts",
-									"id", 
-									[									
-										"pid[=]" => $pid,
-										"LIMIT" => [$page , $limit] 		
-									]
-								);//根据分页获取ID
-			$list = $model->select("posts",
-									   "*",
-									   [	
-										   "id" => $id
-									   ]
-									);//请求数据库数据
-		    if(empty($list)){
-		    	echo '';
-			}else{			
-				$re = $list;
-				foreach ($re as $key => $value) {
-					$re[$key]['content'] = mb_substr($value['content'],0,300,'utf-8');  
-				}		
-				$data['posts'] = $re;
-		    	$this->assign('data',$data);
-		        $this->display('ajax/index.html');
-			}
-		 }else {
-		   echo "submit is no come~";
-	    }	    
+    
 	}
 	//文章详情
 	public function postinfo(){
@@ -89,7 +56,7 @@ class indexCtrl extends \core\phpmsframe
 						"id[>]" => $re['id'],
 						"pid" => $re['pid'],
 						"LIMIT" => [0,1],
-						"ORDER" => ["id" => "DESC"]
+						"ORDER" => ["id" => "ASC"]
 					]
 				);
  		$next_id = $model->select("posts",
@@ -105,7 +72,17 @@ class indexCtrl extends \core\phpmsframe
  		}
  	    if(!empty($next_id)){
  	    	$data['next_id']=$next_id['0'];
- 		} 		
+		} 					
+		$data['comments']  = [];
+		$comments = $model->select("comment",
+								"*", 
+								["post_id"=>$id]
+							);
+		foreach ($comments as $key => $value) {
+			$comments[$key]['content'] = $Parsedown->text($value['content']);
+		}	
+		$data['comments'] = $comments;					
+								
 		$this->assign('data',$data);
         $this->display('postinfo.html');
 	}
@@ -151,6 +128,43 @@ class indexCtrl extends \core\phpmsframe
 	public function search(){  
     	 
 	}
+	//文章评论
+	public function comment(){		
+		if($this->isPost()){
+			session_start();
+			if(!empty($_SESSION['user']['login_status']) && $_SESSION['user']['login_status']=='1'){
+				//登陆成功			
+			}else{
+				//未记录登陆
+				js_u('/index.php/login/user#login');exit;
+			}				
+			$arr = $_POST;
+			$arr['from_uid'] = $_SESSION['user']['id'];
+			$arr['nickname'] = $_SESSION['user']['name'];
+			$arr['thumb_img'] = "/public/img/header-img-comment_03.png";
+			$arr['create_time'] = date('Y-m-d H:i:s',time());
+			$model = new \app\model\commentModel();
+			$re = $model->addcomment($arr);										
+			$error_arr = $re->errorInfo();
+			if($error_arr['0']=='00000'){
+				$url = "/index.php/index/postinfo/id/".$_POST['post_id'];
+				js_u($url);
+			}else{
+				dump($error_arr);         				
+			}	
+		}		
+	}
+	//文章评论数
+	public function commentlist($where){		
+		$model = new \app\model\commentModel();
+		$re = $model->findcomment($where);	
+		if($re){
+			return $re;
+		}else{
+			return [];
+		}		
+	}
+
 	/**
 	 * 是否是GET提交的
 	 */
@@ -161,8 +175,7 @@ class indexCtrl extends \core\phpmsframe
 	 * 是否是POST提交
 	 * @return int
 	 */
-	function isPost() {
-	  return ($_SERVER['REQUEST_METHOD'] == 'POST' && checkurlHash($GLOBALS['verify']) && (empty($_SERVER['HTTP_REFERER']) || preg_replace("~https?:\/\/([^\:\/]+).*~i", "\\1", $_SERVER['HTTP_REFERER']) == preg_replace("~([^\:]+).*~", "\\1", $_SERVER['HTTP_HOST']))) ? 1 : 0;
-	}
-     
+	public function isPost() {
+		return isset($_SERVER['REQUEST_METHOD']) && !strcasecmp($_SERVER['REQUEST_METHOD'],'POST');
+	}   
 }
