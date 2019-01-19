@@ -164,7 +164,13 @@ class editCtrl extends \core\phpmsframe
 	public function index(){ 
 		$model = new \app\model\termModel();
 		$re = $model->lists(); 
-		$re = $this->recursion($re,0);	
+		//$re = $this->recursion($re,0);
+		//	getTree
+		$re = $this->get_tree($re);
+		//$re = $this->formatTree($re,0);
+		echo json_encode($re);die;
+		dump($re);
+		die;
 		$data['terms'] = $re;
 		$pid    =  0;
 		$page   =  0; 
@@ -225,15 +231,16 @@ class editCtrl extends \core\phpmsframe
 	********************/
     
 	//效率最低的递归方法：就是不停的foreach循环递归。
-	function getTreeOptions3($list, $pid = 0)
+	function getTreeOptions3($list, $pid = 0,$level = 0)
 	{    
 		$options = [];    
-		foreach ($list as $key => $value) {        
-			if ($value['id'] == $pid) {
-			 	//查看是否为子元素，如果是则递归继续查询
-	            $options[$value['id']] = $value['name'];            
+		foreach ($list as $key => $value) {		
+			if ($value['pid'] == $pid) {
+				//查看是否为子元素，如果是则递归继续查询
+				$value['level'] = $level;
+	            $options[] = $value;            
 	            unset($list[$key]);//销毁已查询的，减轻下次递归时查询数量
-	            $optionsTmp = $this->getTreeOptions3($list, $value['id']);
+				$optionsTmp = $this->getTreeOptions3($list, $value['id'],$level+1);				
 	            //递归
 	            if (!empty($optionsTmp)) {                
 	            	$options = array_merge($options, $optionsTmp);
@@ -244,57 +251,59 @@ class editCtrl extends \core\phpmsframe
 	}
 
 	//入栈、出栈的递归来
-	function getTreeOptions2($list, $pid = 0)
+	function getTreeOptions2($list, $pid = 0,$level = 0)
 	{    
 		$tree = [];    
 		if (!empty($list)) {        
 		    //先将数组反转，因为后期出栈时会优先出最上面的
-	        $list = array_reverse($list);        
+			$list = array_reverse($list);    			
 	        //先取出顶级的来压入数组$stack中，并将在$list中的删除掉
 	        $stack = [];        
 	        foreach ($list as $key => $value) {            
-	        	if ($value['pid'] == $pid) {                
+	        	if ($value['pid'] == $pid) {  
+					$value['level'] = $level;              
 	        		array_push($stack,$value);                
 	        		unset($list[$key]);
 	            }
-
-	        }        
+			}       			    
 	        while (count($stack)) {            
 	        	//先从栈中取出第一项
-	            $info = array_pop($stack);            
+				$info = array_pop($stack); 				         
 	            //查询剩余的$list中pid与其id相等的，也就是查找其子节点
 	            foreach ($list as $key => $child) {                
-	            	if ($child[pid] == $info['id']) {                    
-	            		//如果有子节点则入栈，while循环中会继续查找子节点的下级
+	            	if ($child['pid'] == $info['id']) {                    
+						//如果有子节点则入栈，while循环中会继续查找子节点的下级
+						$child['level'] = $info['level']+1;    
 	                    array_push($stack,  $child);                    
 	                    unset($list[$key]);
 	                }
-	            }            
+				}    				      
 	            //组装成下拉菜单格式
-	            $tree[$info['id']] = $info['name'];
+	            $tree[] = $info;
 	        }
 	    }    
 	    return $tree;
 	}
 
 	//引用
-	function getTree($list, $pid = 0)
+	function getTreeOptions($list, $pid = 0)
 	{    
 		$tree = [];    
 		if (!empty($list)) {        //先修改为以id为下标的列表
 	        $newList = [];        
-	        foreach ($list as $k => $v) {            
+	        foreach ($list as $k => $v) {  				          
 	        	$newList[$v['id']] = $v;
-
 	        }        
 	        //然后开始组装成特殊格式
 	        foreach ($newList as $value) {            
 	        	if ($pid == $value['pid']) {//先取出顶级
-	                $tree[] = &$newList[$value['id']];
+					$tree[] = &$newList[$value['id']];
+					
 	            } elseif (isset($newList[$value['pid']])) {
-	            //再判定非顶级的pid是否存在，如果存在，则再pid所在的数组下面加入一个字段items，来将本身存进去
-	             $newList[$value['pid']]['items'][] = &$newList[$value['id']];
-	            }
+					//再判定非顶级的pid是否存在
+					//如果存在，则再pid所在的数组下面加入一个字段items，来将本身存进去
+	            	$newList[$value['pid']]['items'][] = &$newList[$value['id']];
+				}				
 	        }
 	    }    
 	    return $tree;
@@ -302,24 +311,49 @@ class editCtrl extends \core\phpmsframe
 	// 	（递归）耗时：8.9441471099854左右
 	//  （迭代）耗时：6.7250330448151左右
 	//  （引用）耗时：0.028863906860352左右
+
+	//array树转array
     function formatTree($tree)
 	{    
 		$options = [];    
 		if (!empty($tree)) {        
-			foreach ($tree as $key => $value) {            
-				$options[$value['id']] = $value['name'];            
+			foreach ($tree as $key => $value) {            				         
 				if (isset($value['items'])) {//查询是否有子节点
-	                $optionsTmp = $this->formatTree($value['items']); 
+					$optionsTmp = $this->formatTree($value['items']); 
+					unset($value['items']);
+					$options[] = $value;   
 	                if (!empty($optionsTmp)) {                   
 	                    $options = array_merge($options, $optionsTmp);
-	                }
-	            }
+					}					
+	            }else{
+					$options[] = $value;   
+				}
 	        }
 	    }    
 	    return $options;
+	}	
+	//数组变成无限级分类--传引用思想
+	public static function get_tree($orig) {
+		//解决下标不是1开始的问题
+		$items = [];
+		foreach ($orig as $key => $value) {
+		 	$items[$value['id']] = $value;
+		}
+		//开始组装
+		$tree = [];
+		foreach ($items as $key => $item) {
+			if ($item['pid'] == 0) { //为0，则为1级分类
+				$tree[] = &$items[$key];
+			} else {
+				if (isset($items[$item['pid']])) { //存在值则为二级分类
+					$items[$item['pid']]['items'][] = &$items[$key]; //传引用直接赋值与改变
+				} else { 
+					//至少三级分类
+					//由于是传引用思想，这里将不会有值
+					$tree[] = &$items[$key];
+				}
+		 	}
+		}
+		return $tree;
 	}
- 
-
-
-
 }
