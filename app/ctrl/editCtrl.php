@@ -129,6 +129,27 @@ class editCtrl extends \core\phpmsframe
 	   	}
 	   	return $list;
 	} 
+	function getDataTree($rows, $id='id',$pid = 'pid',$child = 'items',$root=0) {      
+		     $tree = array(); // 树  
+			if(is_array($rows)){
+				$array = array();
+				foreach ($rows as $key=>$item){
+				$array[$item[$id]] =& $rows[$key];
+			}
+			foreach($rows as $key=>$item){
+				$parentId = $item[$pid];
+				if($root == $parentId){
+					$tree[] =&$rows[$key];
+				}else{
+					if(isset($array[$parentId])){
+						$parent =&$array[$parentId];
+						$parent[$child][]=&$rows[$key];
+					}
+				}
+			}
+		}
+		return $tree;
+	}
 	//添加分类行为
 	public function term_action(){ 
 	    dump($_POST);
@@ -164,13 +185,7 @@ class editCtrl extends \core\phpmsframe
 	public function index(){ 
 		$model = new \app\model\termModel();
 		$re = $model->lists(); 
-		//$re = $this->recursion($re,0);
-		//	getTree
-		$re = $this->get_tree($re);
-		//$re = $this->formatTree($re,0);
-		echo json_encode($re);die;
-		dump($re);
-		die;
+		$re = $this->recursion($re,0);
 		$data['terms'] = $re;
 		$pid    =  0;
 		$page   =  0; 
