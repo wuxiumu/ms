@@ -120,7 +120,7 @@ class phpmsframe
 	}
 
 	static private function reportingDog($msg){
-		echo $msg."\n";		
+		echo $msg."\n";				
 		include 'smile/havefun.php';		
 		$num = str_pad(rand(00,32),2,"0",STR_PAD_LEFT);
 		$num = "str_".$num;		
@@ -128,6 +128,9 @@ class phpmsframe
 		echo $Parsedown->text($$num);
 		$num = "str_".rand(50,84);
 		echo $Parsedown->text($$num); 
+		// include 'smile/img2txt.php';
+		// $Parsedown = new \Parsedown();
+		// echo $Parsedown->text($str);
 		exit;
 	}
 }
