@@ -14,6 +14,13 @@
         <audio controls="controls">
         <source src="{{ data.mp3.file }}" type="audio/mpeg">
         </audio>
+         {% if data.mp3.num > 1 %}            
+            {% for val in data.mp3.files %}
+            <audio controls="controls">
+                <source src="{{ val }}" type="audio/mpeg">
+            </audio>
+            {% endfor %}
+         {% endif %}   
        {% endif %}
 
       <div id="js_post_content">
@@ -68,104 +75,122 @@
             });
         </script>
 
-<!-- 代码1：放在页面需要展示的位置  -->
-<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
-<div id="cyReping" sid="{{ data.post.id }}" role="cylabs" data-use="reping"></div>
+    <!-- 代码1：放在页面需要展示的位置  -->
+    <!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+    <div id="cyReping" sid="{{ data.post.id }}" role="cylabs" data-use="reping"></div>
 
-<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
-<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
-<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
-<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cyu2AKmwk"></script>
-     
-      <script type="text/javascript">
-      $(document).ready(function() {
-            $("table").addClass("table table-bordered table-striped");
-
-            $("#main-content img").each(function(){
-                var width = 620;
-                var height = 600;
-                var image = $(this);
-                if (image.width() > image.height()){
-                  if(image.width()>width){
-                    image.width(width);
-                    image.height(width/image.width()*image.height());
-                  }
-                }else{
-                  if(image.height()>height){
-                    image.height(height);
-                    image.width(height/image.height()*image.width());
-                  }
-                }
-            });
-
-            $("#main-content img").click(function() {
-                    var _this = $(this);//将当前的pimg元素作为_this传入函数  
-                    imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
-            });
-
-            $("[data-id]").on("click",function(){
-                  var _id = $(this).attr("data-id")
-                  console.log(_id);                                    
-            })
-      });
-
-      function imgShow(outerdiv, innerdiv, bigimg, _this){  
-          var src = _this.attr("src");//获取当前点击的pimg元素中的src属性  
-          $(bigimg).attr("src", src);//设置#bigimg元素的src属性  
+    <!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+    <!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+    <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+    <script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cyu2AKmwk"></script>
         
-          /*获取当前点击图片的真实大小，并显示弹出层及大图*/  
-          $("<img/>").attr("src", src).load(function(){  
-              var windowW = $(window).width();//获取当前窗口宽度  
-              var windowH = $(window).height();//获取当前窗口高度  
-              var realWidth = this.width;//获取图片真实宽度  
-              var realHeight = this.height;//获取图片真实高度  
-              var imgWidth, imgHeight;  
-              var scale = 1.0;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放  
-                
-              if(realHeight>windowH*scale) {//判断图片高度  
-                  imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放  
-                  imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度  
-                  if(imgWidth>windowW*scale) {//如宽度扔大于窗口宽度  
-                      imgWidth = windowW*scale;//再对宽度进行缩放  
-                  }  
-              } else if(realWidth>windowW*scale) {//如图片高度合适，判断图片宽度  
-                  imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放  
-                              imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度  
-              } else {//如果图片真实高度和宽度都符合要求，高宽不变  
-                  imgWidth = realWidth;  
-                  imgHeight = realHeight;  
-              }  
-                      $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放  
-                
-              var w = (windowW-imgWidth)/2;//计算图片与窗口左边距  
-              var h = (windowH-imgHeight)/2;//计算图片与窗口上边距  
-              $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性  
-              $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg  
-          });  
+      <script type="text/javascript">
+        $(document).ready(function() {
+                $("table").addClass("table table-bordered table-striped");
+
+                $("#main-content img").each(function(){
+                    var width = 620;
+                    var height = 600;
+                    var image = $(this);
+                    if (image.width() > image.height()){
+                    if(image.width()>width){
+                        image.width(width);
+                        image.height(width/image.width()*image.height());
+                    }
+                    }else{
+                    if(image.height()>height){
+                        image.height(height);
+                        image.width(height/image.height()*image.width());
+                    }
+                    }
+                });
+
+                $("#main-content img").click(function() {
+                        var _this = $(this);//将当前的pimg元素作为_this传入函数  
+                        imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+                });
+
+                $("[data-id]").on("click",function(){
+                    var _id = $(this).attr("data-id")
+                    console.log(_id);                                    
+                })
+        });
+
+        function imgShow(outerdiv, innerdiv, bigimg, _this){  
+            var src = _this.attr("src");//获取当前点击的pimg元素中的src属性  
+            $(bigimg).attr("src", src);//设置#bigimg元素的src属性  
             
-          $(outerdiv).click(function(){//再次点击淡出消失弹出层  
-              $(this).fadeOut("fast");  
-          });  
-      }   
-      function tts(){
-            var js_post_content = $("#js_post_content").text(); 
-            var _id = "{{ data.post.id }}";
-            var _name = "{{ data.post.name }}";
-            console.log(js_post_content);
-            $.ajax({
-                type: "POST",
-                url: "/api.php/baidu_tts/v1",
-                data: {
-                    id:_id,
-                    name:_name,
-                    content:js_post_content,
-                },
-                dataType: "json",
-                success: function(data){
-                    console.log(data);
+            /*获取当前点击图片的真实大小，并显示弹出层及大图*/  
+            $("<img/>").attr("src", src).load(function(){  
+                var windowW = $(window).width();//获取当前窗口宽度  
+                var windowH = $(window).height();//获取当前窗口高度  
+                var realWidth = this.width;//获取图片真实宽度  
+                var realHeight = this.height;//获取图片真实高度  
+                var imgWidth, imgHeight;  
+                var scale = 1.0;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放  
+                    
+                if(realHeight>windowH*scale) {//判断图片高度  
+                    imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放  
+                    imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度  
+                    if(imgWidth>windowW*scale) {//如宽度扔大于窗口宽度  
+                        imgWidth = windowW*scale;//再对宽度进行缩放  
+                    }  
+                } else if(realWidth>windowW*scale) {//如图片高度合适，判断图片宽度  
+                    imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放  
+                                imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度  
+                } else {//如果图片真实高度和宽度都符合要求，高宽不变  
+                    imgWidth = realWidth;  
+                    imgHeight = realHeight;  
+                }  
+                        $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放  
+                    
+                var w = (windowW-imgWidth)/2;//计算图片与窗口左边距  
+                var h = (windowH-imgHeight)/2;//计算图片与窗口上边距  
+                $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性  
+                $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg  
+            });  
+                
+            $(outerdiv).click(function(){//再次点击淡出消失弹出层  
+                $(this).fadeOut("fast");  
+            });  
+        } 
+        var isFirst = true;  
+        function tts(){
+            if(isFirst){
+                var js_post_content = $("#js_post_content").text(); 
+                var _id = "{{ data.post.id }}";
+                var _name = "{{ data.post.name }}";
+
+                var _len = js_post_content.length;
+                var _num = _len/2048;
+                _num = Math.floor(_num);
+                
+                for(i=0;i<=_num;i++){
+                    str = js_post_content.substring(i*2048,i*2048+2048);
+                    var id_name = _id;
+                    if(i>0){
+                    var id_name = id_name+"_"+i;
+                    }
+                    setInterval(ajax_tts(id_name,_name,str),20000);                 
                 }
-            });
-      }  
+                isFirst = false;                
+            }    
+        }  
+        function ajax_tts(_id,_name,js_post_content){
+                $.ajax({
+                    type: "POST",
+                    url: "/api.php/baidu_tts/v2",
+                    data: {
+                        id:_id,
+                        name:_name,
+                        content:js_post_content,
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+        }      
       </script>
 {% endblock %}

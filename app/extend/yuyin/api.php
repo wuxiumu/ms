@@ -10,10 +10,12 @@ function tts_apispeech($content,$file,$vol=5){
     // 识别正确返回语音二进制 错误则返回json 参照下面错误码
     if(!is_array($result)){
         file_put_contents($file, $result);
+        $data['status'] = 1;
+        $data['msg'] = 'ok';
+        $data['php'] = 'ms';        
+        echo json_encode($data);
+    }else{
+        echo $result;
     }
-    $data['status'] = 1;
-    $data['msg'] = 'ok';
-    $data['php'] = 'ms';
-    //return $data;
-    echo json_encode($data);
+
 }

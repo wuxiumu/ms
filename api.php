@@ -15,11 +15,24 @@ Flight::route('POST /api.php/baidu_tts/v1', function(){
     $file = PHPMSFRAME.'/public/media/baidu_tts/post_'.$id.".mp3";
     tts_apispeech($content,$file,$vol=5);
 });
+Flight::route('POST /api.php/baidu_tts/v2', function(){
+    require PHPMSFRAME.'/app/extend/yuyin/tts.php';
+    $id = $_POST['id']; 
+    $name= $_POST['name']; 
+    
+    $_num = floor(mb_strlen($_POST['content'])/2048);
+    
+        $content= mb_substr($_POST['content'],0,2048,'utf-8'); 
+        $file = PHPMSFRAME.'/public/media/baidu_tts/post_'.$id.".mp3";
+        $re = baidu_tts($content,$file);
+    
+    echo json_encode($re);
+});
 
 Flight::route('GET /api.php/OCR/@url', function($url){    
     require PHPMSFRAME.'/app/extend/OCR/api.php';
     $client = new AipOcr('15465241', 'yLMHVyCWg64RRbVVlRI8GGP5', 'PyGbkuDvmFvn1hDctxpfgfwOkBPLCPr9');
-    $image = file_get_contents('http://wqbms.com/phptime.jpg');
+    $image = file_get_contents('phptime.jpg');
     // 调用通用文字识别（高精度版）
     $client->basicAccurate($image);    
     // 如果有可选参数

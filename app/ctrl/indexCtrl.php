@@ -20,6 +20,7 @@ class indexCtrl extends \core\phpmsframe
 		$id = $model->select("posts",
 								"id", 
 								[
+									"display" => 1,
 									"LIMIT" => [$page , $limit],
 									"ORDER" => ["id" => "DESC"]
 								]
@@ -87,10 +88,19 @@ class indexCtrl extends \core\phpmsframe
 		if(file_exists($filename)){
 			$data['mp3']['status'] = 1;
 			$data['mp3']['file'] = '/public/media/baidu_tts/post_'.$id.'.mp3';
+			$data['mp3']['num']=1;
+			for($i=1;$i<10;$i++){
+				$filename = PHPMSFRAME.'/public/media/baidu_tts/post_'.$id."_".$i.'.mp3';
+				if(file_exists($filename)){
+					$data['mp3']['files'][] = '/public/media/baidu_tts/post_'.$id."_".$i.'.mp3';
+					$data['mp3']['num']= $i+1;
+				}else{
+					break;
+				}
+			}
 		}else{
 			$data['mp3']['status'] = 2;
-		}
-		
+		}		
 		$this->assign('data',$data);
         $this->display('postinfo.html');
 	}
