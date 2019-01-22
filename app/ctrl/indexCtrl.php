@@ -83,6 +83,14 @@ class indexCtrl extends \core\phpmsframe
 		}	
 		$data['comments'] = $comments;					
 								
+		$filename = PHPMSFRAME.'/public/media/baidu_tts/post_'.$id.'.mp3';
+		if(file_exists($filename)){
+			$data['mp3']['status'] = 1;
+			$data['mp3']['file'] = '/public/media/baidu_tts/post_'.$id.'.mp3';
+		}else{
+			$data['mp3']['status'] = 2;
+		}
+		
 		$this->assign('data',$data);
         $this->display('postinfo.html');
 	}

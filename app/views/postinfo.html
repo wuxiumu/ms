@@ -8,17 +8,21 @@
 
 {% block content %}
       <h1>{{ data.post.title }}</h1>
-      <h3>时间：{{ data.post.created_at }}</h3>
+      <h3 onclick="tts()">时间：{{ data.post.created_at }}</h3>
 
+       {% if data.mp3.status == 1 %}
+        <audio controls="controls">
+        <source src="{{ data.mp3.file }}" type="audio/mpeg">
+        </audio>
+       {% endif %}
+
+      <div id="js_post_content">
       <p>{% autoescape false %}{{ data.post.content }}{% endautoescape %}</p> 
-
+      </div>  
       <br>
+      
        {% for val in data.comments %}
-
         <div class="container">
-
-        
-
         <div class="row" >
             <div class="col-md-6" 
                 style="background-color: #dedef8;box-shadow: 
@@ -143,6 +147,25 @@
           $(outerdiv).click(function(){//再次点击淡出消失弹出层  
               $(this).fadeOut("fast");  
           });  
-      }     
+      }   
+      function tts(){
+            var js_post_content = $("#js_post_content").text(); 
+            var _id = "{{ data.post.id }}";
+            var _name = "{{ data.post.name }}";
+            console.log(js_post_content);
+            $.ajax({
+                type: "POST",
+                url: "/api.php/baidu_tts/v1",
+                data: {
+                    id:_id,
+                    name:_name,
+                    content:js_post_content,
+                },
+                dataType: "json",
+                success: function(data){
+                    console.log(data);
+                }
+            });
+      }  
       </script>
 {% endblock %}
