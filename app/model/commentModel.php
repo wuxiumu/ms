@@ -1,10 +1,10 @@
 <?php
 
-namespace app\model;
+namespace App\Model;
 
-use core\lib\model;
+use Core\Lib\Model;
 
-class commentModel extends model
+class CommentModel extends Model
 {
 	public $table = 'comment';
 

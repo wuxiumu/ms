@@ -1,10 +1,10 @@
 <?php
 
-namespace app\ctrl;
+namespace App\Ctrl;
 
-use core\lib\model;
+use Core\Lib\Model;
 
-class userCtrl extends \core\phpmsframe
+class UserCtrl extends BaseController
 {	
 	//用户 权限
 	public function index(){ 

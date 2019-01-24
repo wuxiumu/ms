@@ -4,7 +4,7 @@ namespace App\Ctrl;
 
 use Core\Lib\Model;
 
-class EditCtrl extends \core\phpmsframe
+class EditCtrl extends BaseController
 {	
 	public function __construct(){
 		session_start();
@@ -19,7 +19,7 @@ class EditCtrl extends \core\phpmsframe
 	public function add(){ 
 		$data['post'] = [];
 		$data['post']['created_at'] = date("Y-m-d H:i:s",time());	
-		$termModel = new \app\model\termModel();
+		$termModel = new \App\Model\TermModel();
 		$reterm = $termModel->lists(); 
 		$reterm = $this->recursion($reterm,0);	
 		$data['terms'] = $reterm;
@@ -32,7 +32,7 @@ class EditCtrl extends \core\phpmsframe
     	$time = date("Y-m-d H:i:s",time());  		
         $arr['updated_at'] = $time;
 		$arr['uid'] = $_SESSION['user']['id'];
-		$model = new \app\model\termModel();
+		$model = new \App\Model\TermModel();
 	    if($arr['pid'] =='0' ){
 	        $arr['path'] = '0';
 	    }else{
@@ -43,7 +43,7 @@ class EditCtrl extends \core\phpmsframe
 	    		$arr['path'] = '0-'.$arr['pid'];	
 	    	}	    	
 	    }
-		$model = new \app\model\postModel();
+		$model = new \App\Model\PostModel();
 		if(empty($arr['id'])){
 			unset($arr['id']);
 			$re = $model->addpost($arr);					
@@ -63,10 +63,10 @@ class EditCtrl extends \core\phpmsframe
 	//修改页面
 	public function mod(){ 
 		$id = $_GET['id'];
-		$model = new \app\model\postModel();
+		$model = new \App\Model\PostModel();
 		$re = $model->getOne($id);
 		$data['post'] = $re;	
-        $termModel = new \app\model\termModel();
+        $termModel = new \App\Model\TermModel();
 		$reterm = $termModel->lists(); 
 		$reterm = $this->recursion($reterm,0);	
 		$data['terms'] = $reterm;
@@ -75,7 +75,7 @@ class EditCtrl extends \core\phpmsframe
 	}
 	//添加分类页面
 	public function term_add(){ 
-        $model = new \app\model\termModel();
+        $model = new \App\Model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);	
 		$data['terms'] = $re;		 
@@ -85,7 +85,7 @@ class EditCtrl extends \core\phpmsframe
 	//修改分类页面
 	public function term_mod(){ 
 		$id = $_GET['id'];
-        $model = new \app\model\termModel();
+        $model = new \App\Model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);	
 		foreach ($re as $key => $value) {
@@ -101,7 +101,7 @@ class EditCtrl extends \core\phpmsframe
 	}
 	//分类页面列表
 	public function term_list(){ 
-        $model = new \app\model\termModel();
+        $model = new \App\Model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);	
 		$data['terms'] = $re;	
@@ -154,7 +154,7 @@ class EditCtrl extends \core\phpmsframe
 	public function term_action(){ 
 	    dump($_POST);
 	    $arr = $_POST;
-	    $model = new \app\model\termModel();
+	    $model = new \App\Model\TermModel();
 	    if($arr['pid'] =='0' ){
 	        $arr['path'] = '0';
 	    }else{
@@ -183,7 +183,7 @@ class EditCtrl extends \core\phpmsframe
 
 	//文章列表
 	public function index(){ 
-		$model = new \app\model\termModel();
+		$model = new \App\Model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);
 		$data['terms'] = $re;
@@ -196,7 +196,7 @@ class EditCtrl extends \core\phpmsframe
 		}
 		$page = ($data['currentPage']-1)*$limit;
 		$data['numberOfPages'] = $limit;	
-		$model = new \app\model\postModel();
+		$model = new \App\Model\PostModel();
 		$conf = [					
 			"ORDER" => ["id" => "DESC"],
 			"LIMIT" => [$page, $limit]

@@ -1,15 +1,15 @@
 <?php
 
-namespace app\ctrl;
+namespace App\Ctrl;
 
-use core\lib\model;
+use Core\Lib\Model;
 
-class indexCtrl extends \core\phpmsframe
+class IndexCtrl extends BaseController
 {	
 	//首页 文章列表
 	public function index(){
 	    session_start(); 		
-		$model = new \app\model\postModel();
+		$model = new \App\Model\PostModel();
 		$page = 0;//数组以0起始
 		if(isset($_GET['page'])){
 			$page = $_GET['page'];
@@ -46,7 +46,7 @@ class indexCtrl extends \core\phpmsframe
 	//文章详情
 	public function postinfo(){
 	    $id =  $_GET['id'];
-		$model = new \app\model\postModel();
+		$model = new \App\Model\PostModel();
 		$re = $model->getOne($id);
 		$Parsedown = new \Parsedown();
 	    $re['content'] = $Parsedown->text($re['content']);
@@ -115,7 +115,7 @@ class indexCtrl extends \core\phpmsframe
 	    $data['pid'] = $pid;
 		$data['previous'] = $page - $limit;				
 		$data['next']     = $page + $limit;
-		$model = new \app\model\postModel();		
+		$model = new \App\Model\PostModel();		
 		$id = $model->select("posts",
 								"id", 
 								[
@@ -161,7 +161,7 @@ class indexCtrl extends \core\phpmsframe
 			$arr['nickname'] = $_SESSION['user']['name'];
 			$arr['thumb_img'] = "/public/img/header-img-comment_03.png";
 			$arr['create_time'] = date('Y-m-d H:i:s',time());
-			$model = new \app\model\commentModel();
+			$model = new \App\Model\CommentModel();
 			$re = $model->addcomment($arr);										
 			$error_arr = $re->errorInfo();
 			if($error_arr['0']=='00000'){
@@ -174,7 +174,7 @@ class indexCtrl extends \core\phpmsframe
 	}
 	//文章评论数
 	public function commentlist($where){		
-		$model = new \app\model\commentModel();
+		$model = new \App\Model\CommentModel();
 		$re = $model->findcomment($where);	
 		if($re){
 			return $re;

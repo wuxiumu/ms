@@ -1,10 +1,10 @@
 <?php
 
-namespace app\model;
+namespace App\Model;
 
-use core\lib\model;
+use Core\Lib\Model;
 
-class postModel extends model
+class PostModel extends Model
 {
 	public $table = 'posts';
 

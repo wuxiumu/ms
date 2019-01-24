@@ -1,12 +1,12 @@
 <?php
 
-namespace app\ctrl;
+namespace App\Ctrl;
 
-use core\lib\model;
+use Core\Lib\Model;
 
 use Gregwar\Captcha\CaptchaBuilder as CaptchaBuilder;
 
-class loginCtrl extends \core\phpmsframe
+class LoginCtrl extends BaseController
 {
 	public $encryptMethod = 'aes-256-cbc';//加密算法
 	//用户注册页
