@@ -1,13 +1,13 @@
 <?php
 
-namespace core\lib\drive\template;
+namespace Core\Lib\Drive\Template;
 
-class phpView{   
+class PhpView{   
 	
 	public function view($file,$assign)
     {
-		$file_path = APP.'/views/'.$file;
-		extract($assign);
-		include $file_path;
+			$file_path = APP.'/views/'.$file;
+			extract($assign);
+			include $file_path;
     }
 }

@@ -2,9 +2,9 @@
 /**
  * 继承medoo第3方类库，模型基类
  */
-namespace core\lib\drive\database;
+namespace Core\Lib\Drive\Database;
 
-use core\lib\conf;
+use Core\Lib\Conf;
 
 use Medoo\Medoo;
 

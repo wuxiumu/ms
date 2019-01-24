@@ -1,8 +1,8 @@
 <?php
 
-namespace core\lib\drive\template;
+namespace Core\Lib\Drive\Template;
 
-class twigView{   
+class TwigView{   
 
     public function view($file,$assign)
     {

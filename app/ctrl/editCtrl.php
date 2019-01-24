@@ -1,10 +1,10 @@
 <?php
 
-namespace app\ctrl;
+namespace App\Ctrl;
 
-use core\lib\model;
+use Core\Lib\Model;
 
-class editCtrl extends \core\phpmsframe
+class EditCtrl extends \core\phpmsframe
 {	
 	public function __construct(){
 		session_start();
@@ -228,8 +228,12 @@ class editCtrl extends \core\phpmsframe
         $this->display('posts/list.html');
 	}
 
-	//文章详情
-	public function postinfo(){ 
+	//文章评论列表
+	public function postcommentlists(){ 
+		
+	}
+	//文章评论详情
+	public function postcommentinfo(){ 
     	 
 	}
 

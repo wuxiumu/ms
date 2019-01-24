@@ -2,15 +2,15 @@
 /**
  * 继承pdo的，模型基类
  */
-namespace core\lib\drive\database;
+namespace Core\Lib\Drive\Database;
 
-use core\lib\conf;
+use Core\Lib\Conf;
 
-class pdoModel extends \PDO{
+class PdoModel extends \PDO{
     //初始化，继承pdo应该是就可以直接用手册中的pdo中的方法了
     public function __construct()
     {
-		$database = conf::all('database');	
+		$database = Conf::all('database');	
 		$dsn='mysql:host='.$database['msyql_default']['DSN'].';dbname='.$database['msyql_default']['DBNAME'];
 		$username=$database['msyql_default']['USERNAME'];
 		$password=$database['msyql_default']['PASSWORD'];

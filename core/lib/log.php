@@ -1,24 +1,24 @@
 <?php
 
-namespace core\lib;
+namespace Core\Lib;
 
-use core\lib\conf;
+use Core\Lib\Conf;
 
-class log
+class Log
 {
 	static $class;
 	/**
 	 * 1.确定日志储存方式
 	 * 2.写日志	 
 	 */
-	static public function init(){
+	public static function init(){
 		//确定储存方式
-		$drive = conf::get('DRIVE','log');
+		$drive = Conf::get('DRIVE','log');
 		$class = '\core\lib\drive\log\\'.$drive;		
 		self::$class = new $class;
 	}
 
-	static public function log($name,$file='log'){
+	public static function log($name,$file='log'){
 		self::$class->log($name,$file);	
 	}
 }

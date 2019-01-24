@@ -1,12 +1,12 @@
 <?php
 
-namespace core\lib;
+namespace Core\Lib;
 
-class conf
+class Conf
 {
-	static public $conf = [];
+	public static $conf = [];
 
-	static public function get($name,$file){		
+	public static function get($name,$file){		
 		/**
 		 * 1.判断配置文件是否存在	
 		 * 2.判断配置是否存在
@@ -28,10 +28,9 @@ class conf
 				throw new Exception("没有这个配置文件", $file);
 			}				
 		}
-
 	}
 
-	static public function all($file){
+	public static function all($file){
 		$file = PHPMSFRAME.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.$file.'.php';		
 		if(isset(self::$conf[$file])){
 			return self::$conf[$file];

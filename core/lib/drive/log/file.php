@@ -1,13 +1,13 @@
 <?php
 
-namespace core\lib\drive\log;
+namespace Core\Lib\Drive\Log;
 
-use core\lib\conf;
+use Core\Lib\Conf;
 
-class file
+class File
 {	
 	public function __construct(){
-		$conf = conf::get('OPTION','log');
+		$conf = Conf::get('OPTION','log');
 		$this->path = $conf['PATH'];
 	}
 	public function log($msg,$file = 'log'){

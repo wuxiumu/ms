@@ -1,10 +1,10 @@
 <?php
 
-namespace core\lib;
+namespace Core\Lib;
 
-use \core\lib\conf;
+use \Core\Lib\Conf;
 
-class route
+class Route
 {
 	public $ctrl;
 

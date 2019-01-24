@@ -1,6 +1,6 @@
 <?php
 
-namespace core;
+namespace Core;
 
 class phpmsframe 
 {
@@ -60,7 +60,7 @@ class phpmsframe
         self::reportingDog($msg);	
     }
  
-	static public function run()
+	public static function run()
 	{		
 		\core\lib\log::init();
 		\core\lib\log::log($_SERVER);
@@ -79,7 +79,7 @@ class phpmsframe
 		}
 	}
 
-	static public function load($class)
+	public static function load($class)
 	{
 		if(isset($classMap[$class])){
 			return true;
@@ -119,7 +119,7 @@ class phpmsframe
 		}
 	}
 
-	static private function reportingDog($msg){
+	private static function reportingDog($msg){
 		echo $msg."\n";				
 		include 'smile/havefun.php';		
 		$num = str_pad(rand(00,32),2,"0",STR_PAD_LEFT);

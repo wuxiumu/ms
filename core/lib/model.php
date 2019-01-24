@@ -1,10 +1,16 @@
 <?php
 
-namespace core\lib;
+namespace Core\Lib;
 
-use  core\lib\drive\database\medooModel;
+use  Core\Lib\Drive\Database\MsdooModel;
 
-class model extends medooModel
+class Model extends MsdooModel
 {	
 	
 }
+// use  Core\Lib\Drive\Database\MedooModel;
+
+// class Model extends MedooModel
+// {	
+	
+// }

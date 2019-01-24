@@ -8,6 +8,7 @@ include CORE.'/common/function.php';
 require CORE.'/flight/Flight.php';
 
 Flight::route('POST /api.php/baidu_tts/v1', function(){
+    //版本一，一次最多512个汉字
     require PHPMSFRAME.'/app/extend/yuyin/api.php';
     $id = $_POST['id']; 
     $name= $_POST['name']; 
@@ -16,16 +17,14 @@ Flight::route('POST /api.php/baidu_tts/v1', function(){
     tts_apispeech($content,$file,$vol=5);
 });
 Flight::route('POST /api.php/baidu_tts/v2', function(){
+    //版本二，一次最多20048个汉字
     require PHPMSFRAME.'/app/extend/yuyin/tts.php';
     $id = $_POST['id']; 
     $name= $_POST['name']; 
-    
-    $_num = floor(mb_strlen($_POST['content'])/2048);
-    
-        $content= mb_substr($_POST['content'],0,2048,'utf-8'); 
-        $file = PHPMSFRAME.'/public/media/baidu_tts/post_'.$id.".mp3";
-        $re = baidu_tts($content,$file);
-    
+    $_num = floor(mb_strlen($_POST['content'])/2048);    
+    $content= mb_substr($_POST['content'],0,2048,'utf-8'); 
+    $file = PHPMSFRAME.'/public/media/baidu_tts/post_'.$id.".mp3";
+    $re = baidu_tts($content,$file);    
     echo json_encode($re);
 });
 
