@@ -18,7 +18,6 @@ define('PHPMSFRAME',__DIR__);                    //当前内容写在哪个文�
 define('CORE',PHPMSFRAME.'/core');
 define('APP',PHPMSFRAME.'/app');
 define('MODULE','app');
-
 define('DEBUG',true);
  
 include "vendor/autoload.php";

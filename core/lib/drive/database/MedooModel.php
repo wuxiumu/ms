@@ -8,7 +8,7 @@ use Core\Lib\Conf;
 
 use Medoo\Medoo;
 
-class medooModel extends  Medoo{
+class MedooModel extends  Medoo{
     //初始化，继承pdo应该是就可以直接用手册中的pdo中的方法了
     public function __construct()
     {

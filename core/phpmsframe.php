@@ -2,7 +2,7 @@
 
 namespace Core;
 
-class phpmsframe 
+abstract class phpmsframe 
 {
 	public static $classMap = array();
 
