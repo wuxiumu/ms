@@ -1,6 +1,6 @@
 <?php
 	return [
-		'DRIVE'=>'file',
+		'DRIVE'=>'File',
 		'OPTION'=>[
 			'PATH'=>PHPMSFRAME.'/runtime/log/'
 		]

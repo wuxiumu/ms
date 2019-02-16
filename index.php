@@ -19,7 +19,7 @@ define('CORE',PHPMSFRAME.'/core');
 define('APP',PHPMSFRAME.'/app');
 define('MODULE','app');
 define('DEBUG',true);
- 
+define('STRICT',false);                  		   //是否开启大小写严格模式
 include "vendor/autoload.php";
 
 if(DEBUG){
@@ -35,6 +35,6 @@ include CORE.'/common/function.php';
 
 include CORE.'/phpmsframe.php';
 
-spl_autoload_register('\core\phpmsframe::load');
+spl_autoload_register('core\phpmsframe::load');
 
-\core\phpmsframe::run();
+core\phpmsframe::run();

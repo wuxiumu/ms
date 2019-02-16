@@ -73,7 +73,7 @@
                 {% for val in data.posts %}
                 <tr>
                     <td>{{ val.id }}</td>
-                    <td>{{ val.title }} </td>
+                    <td><a href="/index.php/index/postinfo/id/{{ val.id }}">{{ val.title }}</a></td>
                     <td>{{ val.description }} </td>
                     <td title="{{ val.created_at }}">{{ val.updated_at }}</td>
                     <td><div class="btn-group">

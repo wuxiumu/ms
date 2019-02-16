@@ -10,15 +10,13 @@ class LoginCtrl extends BaseController
 {
 	public $encryptMethod = 'aes-256-cbc';//加密算法
 	//用户注册页
-	public function user_register(){
-    	session_start();
+	public function user_register(){    	
     	$this->set_token(); 
     	$this->assign('token',$_SESSION['token']);
     	$this->display('userregister.html');
     }
     public function user_register_action(){
-    	//验证token
-    	session_start();    	
+    	//验证token    	  
     	$arr = $_POST;     	
     	if($_SESSION['token']!=$_POST['token']){
     		js_u('/index.php/login/user_register#register');exit;
@@ -43,14 +41,12 @@ class LoginCtrl extends BaseController
     }
 
     //用户登录页
-    public function user(){
-    	session_start();
+    public function user(){    	
     	$this->set_token(); 
     	$this->assign('token',$_SESSION['token']);
     	$this->display('userlogin.html');
     }
-    public function user_login_action(){
-    	session_start();
+    public function user_login_action(){    	
     	if($_SESSION['token']!=$_POST['token']){
     		js_u('/index.php/login/user#login');exit;
     	}
@@ -59,7 +55,7 @@ class LoginCtrl extends BaseController
     		js_u('/index.php/login/user#login',3,'验证码有误');exit;
     	}
     	$name = $_POST['name'];
-    	$model = new \app\model\userModel();
+    	$model = new \app\model\UserModel();
 		$re = $model->finduser(['name'=>$name]);
 		$flag = FALSE;	
 		//结果不为空 ，解密
@@ -73,7 +69,8 @@ class LoginCtrl extends BaseController
     		unset($re['password']);
     		$user = $re;
     		$user['login_status'] = 1;
-    		$_SESSION['user'] = $user; 
+    		$_SESSION['user'] = $user;     			
+		    $_SESSION['user']['set']=array("skin"=>'skin-blur-yellow');		
     		js_u('/index.php/edit/index');    		
     	}else{
     		js_u('/index.php/login/user#login');
@@ -103,8 +100,7 @@ class LoginCtrl extends BaseController
   		//       var_dump($_POST);
     }
 	//用户退出登陆
-	public function user_loginout(){
-		session_start();
+	public function user_loginout(){		
 		session_destroy();
 		js_u('/index.php/edit/index');   
 	}

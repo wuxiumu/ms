@@ -2,7 +2,7 @@
 
 namespace core;
 
-abstract class phpmsframe 
+class phpmsframe 
 {
 	public static $classMap = array();
 
@@ -61,10 +61,10 @@ abstract class phpmsframe
     }
  
 	public static function run()
-	{				
-		\core\lib\log::init();
-		\core\lib\log::log([$_SERVER['PHP_SELF'],$_SERVER['REMOTE_ADDR']]);
-		$route = new \core\lib\route();
+	{				 
+		\core\lib\Log::init();
+		\core\lib\Log::log([$_SERVER['PHP_SELF'],$_SERVER['REMOTE_ADDR']]);
+		$route = new \core\lib\Route();
 		$ctrlClass = $route->ctrl;
 		$action = $route->action;		
 		$ctrlfile = APP.'/ctrl/'.$ctrlClass.'Ctrl.php';

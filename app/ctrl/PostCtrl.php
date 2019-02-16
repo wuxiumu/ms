@@ -11,7 +11,12 @@ class PostCtrl extends BaseController
 	public $user_set = NUll;
 	public function __construct(){
 		session_start(); 
-		$this->user_set = $_SESSION['user']['set'];
+	    if(isset($_SESSION['user']['login_status'])){
+			$this->user_set = $_SESSION['user']['set'];		
+		}else{
+			//未记录登陆
+			js_u('/index.php/login/user#login');exit;
+		}	
 	}
 	//添加分类页面
 	public function term_add(){ 
@@ -24,7 +29,7 @@ class PostCtrl extends BaseController
 	}
 	//分类页面列表
 	public function term_list(){ 
-        $model = new \App\Model\TermModel();
+        $model = new \app\model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);	
 		$data['terms'] = $re;	
@@ -77,7 +82,7 @@ class PostCtrl extends BaseController
 	public function term_action(){ 
 	    dump($_POST);
 	    $arr = $_POST;
-	    $model = new \App\Model\TermModel();
+	    $model = new \app\model\TermModel();
 	    if($arr['pid'] =='0' ){
 	        $arr['path'] = '0';
 	    }else{
@@ -113,7 +118,7 @@ class PostCtrl extends BaseController
 	}
 	//文章列表
 	public function index(){ 
-		$model = new \App\Model\TermModel();
+		$model = new \app\model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);
 		$data['terms'] = $re;
@@ -126,7 +131,7 @@ class PostCtrl extends BaseController
 		}
 		$page = ($data['currentPage']-1)*$limit;
 		$data['numberOfPages'] = $limit;	
-		$model = new \App\Model\PostModel();
+		$model = new \app\model\PostModel();
 		$conf = [					
 			"ORDER" => ["id" => "DESC"],
 			"LIMIT" => [$page, $limit]

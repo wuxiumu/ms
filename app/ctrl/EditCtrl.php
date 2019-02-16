@@ -8,7 +8,7 @@ class EditCtrl extends BaseController
 {	
 	public function __construct(){
 		session_start();
-		if(!empty($_SESSION['user']['login_status']) && $_SESSION['user']['login_status']=='1'){
+		if(isset($_SESSION['user']['login_status'])){
 			//登陆成功			
 		}else{
 			//未记录登陆
@@ -19,7 +19,7 @@ class EditCtrl extends BaseController
 	public function add(){ 
 		$data['post'] = [];
 		$data['post']['created_at'] = date("Y-m-d H:i:s",time());	
-		$termModel = new \App\Model\TermModel();
+		$termModel = new \app\model\TermModel();
 		$reterm = $termModel->lists(); 
 		$reterm = $this->recursion($reterm,0);	
 		$data['terms'] = $reterm;
@@ -32,7 +32,7 @@ class EditCtrl extends BaseController
     	$time = date("Y-m-d H:i:s",time());  		
         $arr['updated_at'] = $time;
 		$arr['uid'] = $_SESSION['user']['id'];
-		$model = new \App\Model\TermModel();
+		$model = new \app\model\TermModel();
 	    if($arr['pid'] =='0' ){
 	        $arr['path'] = '0';
 	    }else{
@@ -43,7 +43,7 @@ class EditCtrl extends BaseController
 	    		$arr['path'] = '0-'.$arr['pid'];	
 	    	}	    	
 	    }
-		$model = new \App\Model\PostModel();
+		$model = new \app\model\PostModel();
 		if(empty($arr['id'])){
 			unset($arr['id']);
 			$re = $model->addpost($arr);					
@@ -63,10 +63,10 @@ class EditCtrl extends BaseController
 	//修改页面
 	public function mod(){ 
 		$id = $_GET['id'];
-		$model = new \App\Model\PostModel();
+		$model = new \app\model\PostModel();
 		$re = $model->getOne($id);
 		$data['post'] = $re;	
-        $termModel = new \App\Model\TermModel();
+        $termModel = new \app\model\TermModel();
 		$reterm = $termModel->lists(); 
 		$reterm = $this->recursion($reterm,0);	
 		$data['terms'] = $reterm;
@@ -75,7 +75,7 @@ class EditCtrl extends BaseController
 	}
 	//添加分类页面
 	public function term_add(){ 
-        $model = new \App\Model\TermModel();
+        $model = new \app\model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);	
 		$data['terms'] = $re;		 
@@ -85,7 +85,7 @@ class EditCtrl extends BaseController
 	//修改分类页面
 	public function term_mod(){ 
 		$id = $_GET['id'];
-        $model = new \App\Model\TermModel();
+        $model = new \app\model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);	
 		foreach ($re as $key => $value) {
@@ -101,7 +101,7 @@ class EditCtrl extends BaseController
 	}
 	//分类页面列表
 	public function term_list(){ 
-        $model = new \App\Model\TermModel();
+        $model = new \app\model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);	
 		$data['terms'] = $re;	
@@ -154,7 +154,7 @@ class EditCtrl extends BaseController
 	public function term_action(){ 
 	    dump($_POST);
 	    $arr = $_POST;
-	    $model = new \App\Model\TermModel();
+	    $model = new \app\model\TermModel();
 	    if($arr['pid'] =='0' ){
 	        $arr['path'] = '0';
 	    }else{
@@ -183,7 +183,7 @@ class EditCtrl extends BaseController
 
 	//文章列表
 	public function index(){ 
-		$model = new \App\Model\TermModel();
+		$model = new \app\model\TermModel();
 		$re = $model->lists(); 
 		$re = $this->recursion($re,0);
 		$data['terms'] = $re;
@@ -196,7 +196,7 @@ class EditCtrl extends BaseController
 		}
 		$page = ($data['currentPage']-1)*$limit;
 		$data['numberOfPages'] = $limit;	
-		$model = new \App\Model\PostModel();
+		$model = new \app\model\PostModel();
 		$conf = [					
 			"ORDER" => ["id" => "DESC"],
 			"LIMIT" => [$page, $limit]

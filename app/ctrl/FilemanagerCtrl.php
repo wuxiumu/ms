@@ -9,7 +9,12 @@ class FilemanagerCtrl extends BaseController
 	public $user_set = NUll;
 	public function __construct(){
 		session_start(); 
-		$this->user_set = $_SESSION['user']['set'];
+	    if(isset($_SESSION['user']['login_status'])){
+			$this->user_set = $_SESSION['user']['set'];		
+		}else{
+			//未记录登陆
+			js_u('/index.php/login/user#login');exit;
+		}		
 	}
 	
 	public function index(){ 		

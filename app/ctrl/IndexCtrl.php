@@ -8,7 +8,7 @@ class IndexCtrl extends BaseController
 {	
 	//首页 文章列表
 	public function index(){		
-		$model = new \App\Model\PostModel();
+		$model = new \app\model\PostModel();
 		$page = 0;//数组以0起始
 		if(isset($_GET['page'])){
 			$page = $_GET['page'];
@@ -45,7 +45,7 @@ class IndexCtrl extends BaseController
 	//文章详情
 	public function postinfo(){
 	    $id =  $_GET['id'];
-		$model = new \App\Model\PostModel();
+		$model = new \app\model\PostModel();
 		$re = $model->getOne($id);
 		$Parsedown = new \Parsedown();
 	    $re['content'] = $Parsedown->text($re['content']);
@@ -114,7 +114,7 @@ class IndexCtrl extends BaseController
 	    $data['pid'] = $pid;
 		$data['previous'] = $page - $limit;				
 		$data['next']     = $page + $limit;
-		$model = new \App\Model\PostModel();		
+		$model = new \app\model\PostModel();		
 		$id = $model->select("posts",
 								"id", 
 								[
@@ -160,7 +160,7 @@ class IndexCtrl extends BaseController
 			$arr['nickname'] = $_SESSION['user']['name'];
 			$arr['thumb_img'] = "/public/img/header-img-comment_03.png";
 			$arr['create_time'] = date('Y-m-d H:i:s',time());
-			$model = new \App\Model\CommentModel();
+			$model = new \app\model\CommentModel();
 			$re = $model->addcomment($arr);										
 			$error_arr = $re->errorInfo();
 			if($error_arr['0']=='00000'){
@@ -173,7 +173,7 @@ class IndexCtrl extends BaseController
 	}
 	//文章评论数
 	public function commentlist($where){		
-		$model = new \App\Model\CommentModel();
+		$model = new \app\model\CommentModel();
 		$re = $model->findcomment($where);	
 		if($re){
 			return $re;

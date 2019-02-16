@@ -32,10 +32,16 @@ class Route
 			$patharr = explode('/', $path) ;
 			if(count($patharr)%2!=0){
 				$patharr[]='Single dog Position';
-			}							 	
-			if(isset($patharr[0])){
-				$this->ctrl = $patharr[0];
-			}
+			}	
+			if(STRICT){
+				if(isset($patharr[0])){						
+			    	$this->ctrl = $patharr[0];
+			    }				
+			}else{
+				if(isset($patharr[0])){						
+			    	$this->ctrl = ucfirst($patharr[0]);
+			    }				
+			}	
 			unset($patharr[0]);
 			if(isset($patharr[1])){
 				$this->action = $patharr[1];
