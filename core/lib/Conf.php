@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Lib;
+namespace core\lib;
 
 class Conf
 {

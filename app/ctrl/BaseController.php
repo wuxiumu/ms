@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Ctrl;
+namespace app\ctrl;
 
-use Core\Lib\Model;
+use core\lib\Model;
 
-class BaseController extends \Core\phpmsframe
+class BaseController extends \core\phpmsframe
 {	
     public function __construct(){
-			
+		session_start();
 	}
 }

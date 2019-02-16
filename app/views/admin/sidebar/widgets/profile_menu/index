@@ -1,0 +1,13 @@
+<div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+    <a href="/public/skin/mstp_105_SuperAdmin/" data-toggle="dropdown">
+        <img class="profile-pic animated" src="/public/skin/mstp_105_SuperAdmin/img/profile-pic.jpg" alt="">
+    </a>
+    <ul class="dropdown-menu profile-menu">
+        <li><a href="/public/skin/mstp_105_SuperAdmin/">My Profile</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+        <li><a href="/public/skin/mstp_105_SuperAdmin/">Messages</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+        <li><a href="/public/skin/mstp_105_SuperAdmin/">Settings</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+        <li><a href="/public/skin/mstp_105_SuperAdmin/">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+    </ul>
+    <h4 class="m-0">Malinda Hollaway</h4>
+    @malinda-h
+</div>

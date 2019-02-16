@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Ctrl;
+namespace app\ctrl;
 
-use Core\Lib\Model;
+use core\lib\Model;
 
 class IndexCtrl extends BaseController
 {	
 	//首页 文章列表
-	public function index(){
-	    session_start(); 		
+	public function index(){		
 		$model = new \App\Model\PostModel();
 		$page = 0;//数组以0起始
 		if(isset($_GET['page'])){

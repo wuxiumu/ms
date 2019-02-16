@@ -2,6 +2,6 @@
 	return [
 		'DRIVE'=>'file',
 		'OPTION'=>[
-			'PATH'=>PHPMSFRAME.'/log/'
+			'PATH'=>PHPMSFRAME.'/runtime/log/'
 		]
     ];

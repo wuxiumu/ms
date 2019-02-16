@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Lib;
+namespace core\lib;
 
-use Core\Lib\Conf;
+use core\lib\Conf;
 
 class Log
 {

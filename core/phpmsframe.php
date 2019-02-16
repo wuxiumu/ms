@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace core;
 
 abstract class phpmsframe 
 {
@@ -61,9 +61,9 @@ abstract class phpmsframe
     }
  
 	public static function run()
-	{		
+	{				
 		\core\lib\log::init();
-		\core\lib\log::log($_SERVER);
+		\core\lib\log::log([$_SERVER['PHP_SELF'],$_SERVER['REMOTE_ADDR']]);
 		$route = new \core\lib\route();
 		$ctrlClass = $route->ctrl;
 		$action = $route->action;		
@@ -101,8 +101,7 @@ abstract class phpmsframe
 
 	public function display($file){
 		$file_path = APP.'/views/'.$file;
-		if(is_file($file_path)){	
-			/***********twig模板***********/
+		if(is_file($file_path)){				
 			$loader = new \Twig_Loader_Filesystem(APP.'/views');
 			$twig = new \Twig_Environment($loader, array(
 			    'cache' => PHPMSFRAME.'/cache',
@@ -110,12 +109,6 @@ abstract class phpmsframe
 			));						
 			$template = $twig->load($file);			
 			$template->display($this->assign?$this->assign:'');
-			/***********twig模板end***********/
-
-			/***********原生模板***********/
-			//extract($this->assign);
-			//include $file_path;
-			/***********原生模板end***********/
 		}
 	}
 

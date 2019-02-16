@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Ctrl;
+namespace app\ctrl;
 
-use Core\Lib\Model;
+use core\lib\Model;
 
 use Gregwar\Captcha\CaptchaBuilder as CaptchaBuilder;
 

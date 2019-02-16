@@ -1,0 +1,14 @@
+
+<!-- Javascript Libraries -->
+<!-- jQuery -->
+<script src="/public/skin/mstp_105_SuperAdmin/js/jquery.min.js"></script> <!-- jQuery Library -->
+
+<!-- Bootstrap -->
+<script src="/public/skin/mstp_105_SuperAdmin/js/bootstrap.min.js"></script>
+
+<!-- UX -->
+<script src="/public/skin/mstp_105_SuperAdmin/js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+
+<!-- Other -->
+<script src="/public/skin/mstp_105_SuperAdmin/js/calendar.min.js"></script> <!-- Calendar -->
+<script src="/public/skin/mstp_105_SuperAdmin/js/feeds.min.js"></script> <!-- News Feeds -->

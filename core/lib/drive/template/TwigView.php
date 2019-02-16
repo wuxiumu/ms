@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Lib\Drive\Template;
+namespace core\lib\drive\Template;
 
 class TwigView{   
 

@@ -1,0 +1,9 @@
+<div class="s-widget m-b-25">
+    <h2 class="tile-title">
+        News Feeds
+    </h2>
+    
+    <div class="s-widget-body">
+        <div id="news-feed"></div>
+    </div>
+</div>

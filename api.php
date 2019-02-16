@@ -17,7 +17,7 @@ Flight::route('POST /api.php/baidu_tts/v1', function(){
     tts_apispeech($content,$file,$vol=5);
 });
 Flight::route('POST /api.php/baidu_tts/v2', function(){
-    //版本二，一次最多20048个汉字
+    //版本二，一次最多2048个汉字
     require PHPMSFRAME.'/app/extend/yuyin/tts.php';
     $id = $_POST['id']; 
     $name= $_POST['name']; 
