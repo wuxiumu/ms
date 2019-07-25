@@ -14,7 +14,7 @@ use InvalidArgumentException;
 class MsdooModel extends Msdoo{
     public function __construct()
     {
-        $option = conf::all('database');		
+		$option = conf::all('database');	
         parent::__construct($option['mysql_medoo_conf']);
     }
 }

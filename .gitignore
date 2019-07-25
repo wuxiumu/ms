@@ -8,3 +8,4 @@
 /runtime
 /.tmb/
 /.quarantine
+/.env

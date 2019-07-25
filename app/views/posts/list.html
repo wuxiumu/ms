@@ -14,7 +14,6 @@
 
 
 <table class="table table-striped">
-	<a href="/index.php/admin/index">supper admin</a>
 	<caption>文章列表
 	<label for="title">分类</label>		 
 		<select id="select_table" name="pid" width="30%">
@@ -64,30 +63,30 @@
 
 	<div id="example"></div>
 	<script type="text/javascript">
-	    var baseUrl = "/index.php/edit/index";
-		{% if data.pid > 0 %}
-			baseUrl = baseUrl+"/pid/"+{{data.pid}}
-		{% endif %}
-		
-		$(function(){
-			$("#select_table").change(function(){
-				var typeCodePre =  $("#select_table").val();
-				window.location.href = "/index.php/edit/index/pid/"+typeCodePre
-			})
+    var baseUrl = "/index.php/edit/index";
+	{% if data.pid > 0 %}
+		baseUrl = baseUrl+"/pid/"+{{data.pid}}
+	{% endif %}
+	
+	$(function(){
+		$("#select_table").change(function(){
+			var typeCodePre =  $("#select_table").val();
+			window.location.href = "/index.php/edit/index/pid/"+typeCodePre
 		})
+	})
 
-	    var options = {
-	            currentPage: {{ data.currentPage }},
-	            totalPages: {{ data.totalPages }},
-	            numberOfPages:{{ data.numberOfPages }},
-	            pageUrl: function(type, page, current){                
-	            	return baseUrl+"/page/"+page;
-	            }	
-	    }
-	 
+    var options = {
+            currentPage: {{ data.currentPage }},
+            totalPages: {{ data.totalPages }},
+            numberOfPages:{{ data.numberOfPages }},
+            pageUrl: function(type, page, current){                
+            	return baseUrl+"/page/"+page;
+            }	
+    }
+ 
 
-	    $('#example').bootstrapPaginator(options);    
-	    $('#example ul').addClass('pagination');
+    $('#example').bootstrapPaginator(options);    
+    $('#example ul').addClass('pagination');
 	</script>
 
 </div>

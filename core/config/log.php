@@ -1,7 +1,7 @@
 <?php
 	return [
-		'DRIVE'=>'File',
+		'DRIVE'=>'file',
 		'OPTION'=>[
-			'PATH'=>PHPMSFRAME.'/runtime/log/'
+			'PATH'=>PHPMSFRAME.'/log/'
 		]
     ];

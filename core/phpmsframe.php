@@ -60,11 +60,11 @@ class phpmsframe
         self::reportingDog($msg);	
     }
  
-	public static function run()
-	{				 
-		\core\lib\Log::init();
-		\core\lib\Log::log([$_SERVER['PHP_SELF'],$_SERVER['REMOTE_ADDR']]);
-		$route = new \core\lib\Route();
+	static public function run()
+	{		
+		\core\lib\log::init();
+		\core\lib\log::log($_SERVER);
+		$route = new \core\lib\route();
 		$ctrlClass = $route->ctrl;
 		$action = $route->action;		
 		$ctrlfile = APP.'/ctrl/'.$ctrlClass.'Ctrl.php';
@@ -79,7 +79,7 @@ class phpmsframe
 		}
 	}
 
-	public static function load($class)
+	static public function load($class)
 	{
 		if(isset($classMap[$class])){
 			return true;
@@ -101,7 +101,8 @@ class phpmsframe
 
 	public function display($file){
 		$file_path = APP.'/views/'.$file;
-		if(is_file($file_path)){				
+		if(is_file($file_path)){	
+			/***********twig模板***********/
 			$loader = new \Twig_Loader_Filesystem(APP.'/views');
 			$twig = new \Twig_Environment($loader, array(
 			    'cache' => PHPMSFRAME.'/cache',
@@ -109,11 +110,17 @@ class phpmsframe
 			));						
 			$template = $twig->load($file);			
 			$template->display($this->assign?$this->assign:'');
+			/***********twig模板end***********/
+
+			/***********原生模板***********/
+			//extract($this->assign);
+			//include $file_path;
+			/***********原生模板end***********/
 		}
 	}
 
-	private static function reportingDog($msg){
-		echo $msg."\n";				
+	static private function reportingDog($msg){
+		echo $msg."\n";		
 		include 'smile/havefun.php';		
 		$num = str_pad(rand(00,32),2,"0",STR_PAD_LEFT);
 		$num = "str_".$num;		
@@ -121,9 +128,6 @@ class phpmsframe
 		echo $Parsedown->text($$num);
 		$num = "str_".rand(50,84);
 		echo $Parsedown->text($$num); 
-		// include 'smile/img2txt.php';
-		// $Parsedown = new \Parsedown();
-		// echo $Parsedown->text($str);
 		exit;
 	}
 }

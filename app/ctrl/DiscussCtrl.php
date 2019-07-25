@@ -14,12 +14,12 @@ class DiscussCtrl extends BaseController
 
 	//评论列表
 	public function index(){ 			
-		echo '评论列表';
-    }
+			echo '评论列表';
+  }
 
-    //Update Discuss
-    public function mod(){
-    	echo '修改评论';
-    }
+	//Update Discuss
+	public function mod(){
+		echo '修改评论';
+	}
     
 }

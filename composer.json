@@ -14,6 +14,6 @@
         "gregwar/captcha": "^1.1",
 		"filp/whoops": "^2.3",
 		"phpunit/phpunit": "^7.5",
-		"jasongrimes/paginator": "~1.0"  
+		"vlucas/phpdotenv": "^3.4"  
     }
 }
