@@ -9,7 +9,8 @@ class imgCtrl extends \core\phpmsframe
     public function s(){
         echo 1;
     }
-    //自动抓取列表
+
+    // 自动抓取列表
     public function spiderauto()
     {        
         $url = "http://www.shunva.com/?m=vod-type-id-16.html";
@@ -32,7 +33,8 @@ class imgCtrl extends \core\phpmsframe
         $this->assign('data',$data);
         $this->display('img.html');
     }
-    //抓取列表方法
+    
+    // 抓取列表方法
     public function spider($url,$page=0)
     {        
         $html = file_get_contents($url);
@@ -66,7 +68,8 @@ class imgCtrl extends \core\phpmsframe
         //echo $title;
         return $page+1;
     }
-    //获取数据列表
+
+    // 获取数据列表
     public function save(){
         // $data = PHPMSFRAME."/nosql/json/国产自拍-1.json";
         // $myfile = fopen($data, "r") or die("Unable to open file!");
@@ -90,11 +93,11 @@ class imgCtrl extends \core\phpmsframe
         if ($px == 0)
             return '';
         $len = mb_strlen($char);
-        //灰度值
+        // 灰度值
         $gray = floor(($r + $g + $b) / 3);
-        //将256个像素平均分配给字符
+        // 将256个像素平均分配给字符
         $unit = ceil($px / $len);
-        //获取当前像素对应的字符
+        // 获取当前像素对应的字符
         $index = floor($gray / $unit);
         if ($index >= $len) {
             $index = $len - 1;
@@ -102,6 +105,7 @@ class imgCtrl extends \core\phpmsframe
         return $char[(int)$index];
     }
 
+    // xxx 
     public function tosmallim($const = 100, $width, $height, $image)
     {
         if ($width > $const) {
@@ -115,9 +119,10 @@ class imgCtrl extends \core\phpmsframe
         return [$image, $width, $height];
     }
 
+    // xxx
     public function index(){        
         $imname = 'https://ms.meiyoufan.com/public/img/posts/896x428.png';
-        //返回一图像标识符，代表了从给定的文件名取得的图像
+        // 返回一图像标识符，代表了从给定的文件名取得的图像
         $image = ImageCreateFromPng($imname);
         //$im = ImageCreateFromJpeg($imname);
     

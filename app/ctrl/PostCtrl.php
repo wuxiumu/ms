@@ -14,20 +14,23 @@ class PostCtrl extends BaseController
 	    if(isset($_SESSION['user']['login_status'])){
 			$this->user_set = $_SESSION['user']['set'];		
 		}else{
-			//未记录登陆
+			// 未记录登陆
 			js_u('/index.php/login/user#login');exit;
 		}	
 	}
-	//添加分类页面
+
+	// 添加分类页面
 	public function term_add(){ 
 		js_u('/index.php/edit/term_add');      
 	}
-	//修改分类页面
+
+	// 修改分类页面
 	public function term_mod(){ 
 		$id = $_GET['id'];
 		js_u('/index.php/edit/term_mod/id/'.$id);     
 	}
-	//分类页面列表
+
+	// 分类页面列表
 	public function term_list(){ 
         $model = new \app\model\TermModel();
 		$re = $model->lists(); 
@@ -41,7 +44,8 @@ class PostCtrl extends BaseController
     	$this->assign('data',$data);
         $this->display('posts/termlist.html');
 	}
-	//显示数组层次关系
+
+	// 显示数组层次关系
 	public function recursion($result,$pid=0,$format="|--"){
 		/*记录排序后的类别数组*/
 		static $list=array();
@@ -57,6 +61,8 @@ class PostCtrl extends BaseController
 	   	}
 	   	return $list;
 	} 
+
+	// xxx 
 	function getDataTree($rows, $id='id',$pid = 'pid',$child = 'items',$root=0) {      
 		    $tree = array(); // 树  
 			if(is_array($rows)){
@@ -78,7 +84,8 @@ class PostCtrl extends BaseController
 		}
 		return $tree;
 	}
-	//添加分类行为
+
+	// 添加分类行为
 	public function term_action(){ 
 	    dump($_POST);
 	    $arr = $_POST;
@@ -107,16 +114,19 @@ class PostCtrl extends BaseController
 		}else{
 		   dump($error_arr);         				
 		}
-	}	
-	//文章添加
+	}
+
+	// 文章添加
 	public function add(){
 		js_u('/index.php/edit/add');
 	}
-	//文章修改
+
+	// 文章修改
 	public function mod(){
 		
 	}
-	//文章列表
+
+	// 文章列表
 	public function index(){ 
 		$model = new \app\model\TermModel();
 		$re = $model->lists(); 
@@ -173,39 +183,39 @@ class PostCtrl extends BaseController
         $this->display('admin/posts/index.html');
 	}
 
-	//文章评论列表
+	// 文章评论列表
 	public function postcommentlists(){ 
 		
 	}
-	//文章评论详情
+	// 文章评论详情
 	public function postcommentinfo(){ 
     	 
 	}
 
-	//文章搜索
+	// 文章搜索
 	public function search(){  
     	 
 	}
 
 	/********************
-	*数据转为树型状的数组  
-	*传统递归方法 getTreeOptions3 
-	*入栈、出栈的递归
-	*引用
+	* 数据转为树型状的数组  
+	* 传统递归方法 getTreeOptions3 
+	* 入栈、出栈的递归
+	* 引用
 	********************/
     
-	//效率最低的递归方法：就是不停的foreach循环递归。
+	// 效率最低的递归方法：就是不停的foreach循环递归。
 	function getTreeOptions3($list, $pid = 0,$level = 0)
 	{    
 		$options = [];    
 		foreach ($list as $key => $value) {		
 			if ($value['pid'] == $pid) {
-				//查看是否为子元素，如果是则递归继续查询
+				// 查看是否为子元素，如果是则递归继续查询
 				$value['level'] = $level;
 	            $options[] = $value;            
-	            unset($list[$key]);//销毁已查询的，减轻下次递归时查询数量
+	            unset($list[$key]);// 销毁已查询的，减轻下次递归时查询数量
 				$optionsTmp = $this->getTreeOptions3($list, $value['id'],$level+1);				
-	            //递归
+	            // 递归
 	            if (!empty($optionsTmp)) {                
 	            	$options = array_merge($options, $optionsTmp);
 	            }
@@ -214,7 +224,7 @@ class PostCtrl extends BaseController
 	    return $options;
 	}
 
-	//入栈、出栈的递归来
+	// 入栈、出栈的递归来
 	function getTreeOptions2($list, $pid = 0,$level = 0)
 	{    
 		$tree = [];    
@@ -249,7 +259,7 @@ class PostCtrl extends BaseController
 	    return $tree;
 	}
 
-	//引用
+	// 引用
 	function getTreeOptions($list, $pid = 0)
 	{    
 		$tree = [];    
@@ -276,7 +286,7 @@ class PostCtrl extends BaseController
 	//  （迭代）耗时：6.7250330448151左右
 	//  （引用）耗时：0.028863906860352左右
 
-	//array树转array
+	// array树转array
     function formatTree($tree)
 	{    
 		$options = [];    
@@ -296,24 +306,26 @@ class PostCtrl extends BaseController
 	    }    
 	    return $options;
 	}	
-	//数组变成无限级分类--传引用思想
+
+	// 数组变成无限级分类--传引用思想
 	public static function get_tree($orig) {
-		//解决下标不是1开始的问题
+		// 解决下标不是1开始的问题
 		$items = [];
 		foreach ($orig as $key => $value) {
 		 	$items[$value['id']] = $value;
 		}
-		//开始组装
+
+		// 开始组装
 		$tree = [];
 		foreach ($items as $key => $item) {
-			if ($item['pid'] == 0) { //为0，则为1级分类
+			if ($item['pid'] == 0) { // 为0，则为1级分类
 				$tree[] = &$items[$key];
 			} else {
-				if (isset($items[$item['pid']])) { //存在值则为二级分类
-					$items[$item['pid']]['items'][] = &$items[$key]; //传引用直接赋值与改变
+				if (isset($items[$item['pid']])) { // 存在值则为二级分类
+					$items[$item['pid']]['items'][] = &$items[$key]; // 传引用直接赋值与改变
 				} else { 
-					//至少三级分类
-					//由于是传引用思想，这里将不会有值
+					// 至少三级分类
+					// 由于是传引用思想，这里将不会有值
 					$tree[] = &$items[$key];
 				}
 		 	}

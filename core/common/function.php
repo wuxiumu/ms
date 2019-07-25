@@ -1,9 +1,9 @@
 <?php
 
-//------打印数据-----
+// 打印数据 
 function p($var){ echo "<pre>"; print_r($var); echo "</pre>";}
 
-//------跳转------
+// 跳转 
 function js_u($url,$time=0,$msg=''){	
 	sleep($time);//调用了sleep()方法,效果也是x秒后执行跳转
 	echo "<script language='javascript' type='text/javascript'>"; 
@@ -14,7 +14,7 @@ function js_u($url,$time=0,$msg=''){
 	echo "</script>"; 
 }
 
-//对象转数组
+// 对象转数组
 function object_to_array($obj){  
     if(is_array($obj)){  
         return $obj;  
@@ -26,3 +26,13 @@ function object_to_array($obj){
     }  
     return $arr;     
 }  
+ 
+// 验证码
+use Gregwar\Captcha\CaptchaBuilder as CaptchaBuilder;
+function mycode(){	
+    $builder = new CaptchaBuilder();
+    $builder->build();		
+    setcookie('phrase', $builder->getPhrase());		 
+    header('Content-type: image/jpeg');
+    $builder->output();
+}	

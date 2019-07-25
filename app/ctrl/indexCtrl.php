@@ -10,7 +10,7 @@ class indexCtrl extends \core\phpmsframe
 	public function index(){
 	    session_start(); 		
 		$model = new \app\model\postModel();
-		$page = 0;//数组以0起始
+		$page = 0; // 数组以0起始
 		if(isset($_GET['page'])){
 			$page = $_GET['page'];
 		}
@@ -24,14 +24,14 @@ class indexCtrl extends \core\phpmsframe
 									"LIMIT" => [$page , $limit],
 									"ORDER" => ["id" => "DESC"]
 								]
-							);//根据分页获取ID
+							); // 根据分页获取ID
 		$list = $model->select("posts",
 								   "*",
 								   [	
 									   "id" => $id,
 									   "ORDER" => ["id" => "DESC"]
 								   ]
-								);//请求数据库数据
+								); // 请求数据库数据
 		$re = $list;
 		foreach ($re as $key => $value) {
 			$re[$key]['content'] = mb_substr($value['content'],0,300,'utf-8');  
@@ -104,7 +104,8 @@ class indexCtrl extends \core\phpmsframe
 		$this->assign('data',$data);
         $this->display('postinfo.html');
 	}
-	//文章分类
+
+	// 文章分类
 	public function term(){
 	    $pid = $_GET['id'];
 	    $page = 0;
@@ -123,14 +124,14 @@ class indexCtrl extends \core\phpmsframe
 									"LIMIT" => [$page , $limit],
 									"ORDER" => ["id" => "DESC"]
 								]
-							);//根据分页获取ID
+							); // 根据分页获取ID
 		$list = $model->select("posts",
 								   "*",
 								   [	
 									   "id" => $id,
 									   "ORDER" => ["id" => "DESC"]
 								   ]
-								);//请求数据库数据		
+								); // 请求数据库数据		
 		$re = [];
 	    if(!empty($list)){
 	    	$re = $list;
@@ -142,18 +143,20 @@ class indexCtrl extends \core\phpmsframe
     	$this->assign('data',$data);
         $this->display('indexterm.html');
 	}
-	//文章搜索
+
+	// 文章搜索
 	public function search(){  
     	 
 	}
-	//文章评论
+
+	// 文章评论
 	public function comment(){		
 		if($this->isPost()){
 			session_start();
 			if(!empty($_SESSION['user']['login_status']) && $_SESSION['user']['login_status']=='1'){
-				//登陆成功			
+				// 登陆成功			
 			}else{
-				//未记录登陆
+				// 未记录登陆
 				js_u('/index.php/login/user#login');exit;
 			}				
 			$arr = $_POST;
@@ -172,7 +175,8 @@ class indexCtrl extends \core\phpmsframe
 			}	
 		}		
 	}
-	//文章评论数
+
+	// 文章评论数
 	public function commentlist($where){		
 		$model = new \app\model\commentModel();
 		$re = $model->findcomment($where);	
@@ -187,8 +191,9 @@ class indexCtrl extends \core\phpmsframe
 	 * 是否是GET提交的
 	 */
 	function isGet(){
-	  return $_SERVER['REQUEST_METHOD'] == 'GET' ? true : false;
+    	return $_SERVER['REQUEST_METHOD'] == 'GET' ? true : false;
 	}
+
 	/**
 	 * 是否是POST提交
 	 * @return int

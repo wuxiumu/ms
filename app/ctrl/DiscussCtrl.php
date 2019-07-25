@@ -12,12 +12,12 @@ class DiscussCtrl extends BaseController
 		$this->user_set = $_SESSION['user']['set'];
 	}
 
-	//评论列表
+	// 评论列表
 	public function index(){ 			
 			echo '评论列表';
   }
 
-	//Update Discuss
+	// Update Discuss
 	public function mod(){
 		echo '修改评论';
 	}

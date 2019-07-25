@@ -8,16 +8,19 @@ use Gregwar\Captcha\CaptchaBuilder as CaptchaBuilder;
 
 class loginCtrl extends \core\phpmsframe
 {
-	public $encryptMethod = 'aes-256-cbc';//加密算法
-	//用户注册页
+	public $encryptMethod = 'aes-256-cbc'; // 加密算法
+
+	// 用户注册页
 	public function user_register(){
     	session_start();
     	$this->set_token(); 
     	$this->assign('token',$_SESSION['token']);
     	$this->display('userregister.html');
-    }
+	}
+	
+	// xxx
     public function user_register_action(){
-    	//验证token
+    	// 验证token
     	session_start();    	
     	$arr = $_POST;     	
     	if($_SESSION['token']!=$_POST['token']){
@@ -42,13 +45,15 @@ class loginCtrl extends \core\phpmsframe
 		}
     }
 
-    //用户登录页
+    // 用户登录页
     public function user(){
     	session_start();
     	$this->set_token(); 
     	$this->assign('token',$_SESSION['token']);
     	$this->display('userlogin.html');
-    }
+	}
+	
+	// xxx
     public function user_login_action(){
     	session_start();
     	if($_SESSION['token']!=$_POST['token']){
@@ -80,15 +85,19 @@ class loginCtrl extends \core\phpmsframe
     	}
     }
 
+	// xxx
 	public function set_token() { 
 	     $_SESSION['token'] = md5(microtime(true)); 
 	} 
-	    
+	
+	// xxx
 	public function valid_token() { 
 	     $return = $_REQUEST['token'] === $_SESSION['token'] ? true : false; 
 	     $this->set_token(); 
 	     return $return; 
 	} 	  
+
+	//xxx
     public function login()
     {
     	echo 1;
@@ -102,14 +111,14 @@ class loginCtrl extends \core\phpmsframe
 		// var_dump($password);
   		//       var_dump($_POST);
     }
-	//用户退出登陆
+	// 用户退出登陆
 	public function user_loginout(){
 		session_start();
 		session_destroy();
 		js_u('/index.php/edit/index');   
 	}
 
-    //加密
+    // 加密
     private function encrypt($originalData){
 	    $publicKeyFilePath = APP.'/rsa/rsa_public_key.pem';
 	    extension_loaded('openssl') or die('php需要openssl扩展支持');
@@ -128,7 +137,7 @@ class loginCtrl extends \core\phpmsframe
 	    return base64_encode($crypto);
 	}
 
-	//解密
+	// 解密
 	private function decrypt($encryptData){
 	    $privateKeyFilePath = APP.'/rsa/rsa_private_key.pem';
 	    extension_loaded('openssl') or die('php需要openssl扩展支持');
@@ -148,12 +157,8 @@ class loginCtrl extends \core\phpmsframe
 	    return $crypto;
 	}
 
-	//验证码
+	// 验证码
 	public function code(){		
-		$builder = new CaptchaBuilder();
-		$builder->build();		
-		setcookie('phrase', $builder->getPhrase());		 
-		header('Content-type: image/jpeg');
-		$builder->output();
+		mycode();
 	}	
 }	

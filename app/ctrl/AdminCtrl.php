@@ -9,9 +9,9 @@ class AdminCtrl extends BaseController
 	public function __construct(){
 		session_start(); 
 	    if(isset($_SESSION['user']['login_status'])){
-			//登陆成功			
+			// 登陆成功			
 		}else{
-			//未记录登陆
+			// 未记录登陆
 			js_u('/index.php/login/user#login');exit;
 		}
 	}
