@@ -1,10 +1,41 @@
 <?php
-
+/* ========================================================================
+ * 全局函数
+ * ======================================================================== */
 // 打印数据 
 function p($var){ echo "<pre>"; print_r($var); echo "</pre>";}
 
+function debug(...$var)
+{
+    if (function_exists('dump')) {
+        array_walk($var, function ($v) {
+            dump($v);
+        });
+    } else {
+        array_walk($var, function ($v) {
+            print_r($v);
+        });
+    }
+    exit();
+}
+
+function json($array)
+{
+    header('Content-Type:application/json; charset=utf-8');
+    echo json_encode($array);
+}
+
+function show404()
+{
+    header('HTTP/1.1 404 Not Found');
+    header("status: 404 Not Found");
+    exit();
+}
+
 // 跳转 
-function js_u($url,$time=0,$msg=''){	
+function redirect($str){ header('Location:' . $str); }
+
+function js_redirect_time_msg($url,$time=0,$msg=''){	
 	sleep($time);//调用了sleep()方法,效果也是x秒后执行跳转
 	echo "<script language='javascript' type='text/javascript'>"; 
 	if(!empty($msg)){

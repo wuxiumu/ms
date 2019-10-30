@@ -1,9 +1,14 @@
-# ms
+## ms
+自己写了个PHP的框架
 
-月初就在找工作面试，感觉有好有坏，不管以后怎么样我发展的怎么样，现在想把过来人的经历分享给大家。
+1. 开发效率
+2. 运行效率
+3. 证明自己
 
-# phpms 框架
+##  phpms 框架 博客
 
-自己写了个PHP的框架，访问地址ms.meiyoufan.com
-
-这是框架的源码，网站我会明天更新。
+访问地址 ms.meiyoufan.com 
+```
+git clone https://github.com/wuxiumu/ms.git
+composer update && php -S localhost:8000
+```

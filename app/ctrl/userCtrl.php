@@ -1,26 +1,13 @@
 <?php
 
-namespace app\ctrl;
+namespace App\Ctrl;
+use Core\phpmsframe as phpms;
 
-use core\lib\model;
-
-class userCtrl extends \core\phpmsframe
+class userCtrl extends phpms
 {	
-	// 用户 权限
-	public function index(){ 
-    	$this->assign('title','404页面');
-        $this->display('index.html');
-	}
 
-	// 文章详情
-	public function postinfo(){ 
-    	 
-	}
-
-	// 文章搜索
-	public function search(){  
-    	 
-	}
-
-     
+	public function index($data=[]){ 
+		$this->assign('data',$data);
+		$this->display('user.html');
+	} 
 }

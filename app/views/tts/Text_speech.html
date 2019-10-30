@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block head %} 
+    <title>phpms微型框架开发的blog-记录面试-记录生活</title>
+    <meta name="keywords" content="php框架,phpms框架，web应用，phpms开发网站，phpms开发个人blog，简洁开发，快速开发,开源框架,开发框架,MVC,php frame,phpms的flight引擎专为api而生 "/>
+    <meta name="description" content="phpms框架 - 是由吴庆宝开发维护的MVC结构的开源PHP框架，遵循Apache2开源协议发布，是为了敏捷WEB应用开发和简化企业及个人应用开发而诞生的。"/>
+{% endblock %}
+
+{% block content %}
+ <div class="container">
+  <form role="form" action="">
+    <button type="button" class="btn btn-default" id="sendUpdate">更新文本</button>
+    <button type="button" class="btn btn-default" id="sendChange">文本转语音</button>
+    <button type="button" class="btn btn-default" id="sendView">查看语音</button>
+    <div class="form-group">
+        <textarea class="form-control" rows="9" id="tts">{{ data.tts }}</textarea>
+    </div>
+  </form>
+</div>    
+<script type="text/javascript">
+ 
+    $("#sendView").click(function () {
+        window.location.href="/tts/ttsList";
+    })
+
+    $("#sendUpdate").click(function () {
+        var tts = $("#tts").val();
+        $.ajax({
+             type: "POST",
+             url: "/tts/textUpdate",   
+             data:"tts="+tts,  
+             dataType: 'json',
+            success: function(result){   
+                if(result.code==200){
+                    alert(result.msg);  
+                }else{
+                    alert(result.msg);
+                }                 
+            }
+        }); 
+    })
+
+    $("#sendChange").click(function () {
+        var isFirst = true;  
+        if(isFirst){
+            var js_post_content = $("#tts").val(); 
+            var _id = "137";
+            var _name = "";
+            var _len = js_post_content.length;
+            var _num = _len/2048;
+            _num = Math.floor(_num);            
+            for(i=0;i<=_num;i++){
+                str = js_post_content.substring(i*2048,i*2048+2048);
+                var id_name = _id;
+                if(i>0){
+                    var id_name = id_name+"_"+i;
+                }
+                setInterval(ajax_tts(id_name,_name,str),20000);                 
+            }
+            isFirst = false; 
+            //window.location.href="/tts/ttsList";               
+            alert('更新成功');
+        }   
+       
+    })
+    
+    function ajax_tts(_id,_name,js_post_content){
+            $.ajax({
+                type: "POST",
+                url: "/tts/ttsText",   
+                data: {
+                    id:_id,
+                    content:js_post_content,
+                },
+                dataType: "json",
+                success: function(data){
+                    console.log(data);
+                }
+            });
+    }  
+</script> 
+
+{% endblock %}

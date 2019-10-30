@@ -1,8 +1,8 @@
 <?php
 
-namespace app\model;
+namespace App\Model;
 
-use core\lib\model;
+use Core\Lib\model;
 
 class postModel extends model
 {

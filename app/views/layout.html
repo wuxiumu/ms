@@ -3,105 +3,41 @@
 <head>
 	<meta charset="utf-8"> 	
   {% block head %}       {% endblock %}  
-  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
-  <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/public/tool/makewebsite/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/public/tool/highlightjs/styles/github.css">
-  <script src="/public/tool/highlightjs/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-	<style>
-    .fakeimg {
-        height: 200px;
-         background: #fff;
-    }
-    .zzidc{color: white;}    
-  </style>
+
+   <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+   <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body>
-<div class="jumbotron text-center zzidc" style="margin-bottom:0;
-background:url(/public/img/zsxl.jpg) no-repeat 5px 5px;background-position:center center">
-  <h1>一个phper,笔试,面试,技术栈的总结</h1>
-  <p>powerby flight phpms </p>
-  <p>成功，唯有积累，没有奇迹</p>
-</div>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="/">网站首页</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="/index.php/index/term/id/3">知识储备</a></li>
-        <li><a href="/index.php/index/term/id/1">笔试</a></li>
-        <li><a href="/index.php/index/term/id/2">面试</a></li>
-        <li><a href="/index.php/index/term/id/4">新技能</a></li>
-        <li><a href="/index.php/index/term/id/15">go</a></li>
-        <li><a href="/index.php/index/term/id/6">头疼的算法</a></li>
-        <li><a href="/index.php/index/term/id/7">有趣的数据结构</a></li>
-        <li><a href="/index.php/index/term/id/14">微习惯</a></li> 
-        <li><a href="/index.php/index/term/id/13">打卡</a></li>        
-        <li><a href="/index.php/login/user#login">登陆</a></li>
-        <li><a href="/index.php/login/user" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">更多</a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-          <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="/index.php/edit/add">添加文章</a>
-          </li>
-          <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="/index.php/edit/index">文章列表</a>
-          </li>
-          <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="/index.php/edit/term_list">分类列表</a>
-          </li>
-          <li role="presentation" class="divider"></li>
-          <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="/index.php/login/user_loginout">退出</a>
-          </li>
-        </ul>  
-        </li>
-
-      </ul>
-    </div>
-  </div>
-</nav>
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm-4">
-      <h2>关于我</h2>
-      <h5>瞧一瞧，看一看:</h5>
-      <div class="fakeimg"><img src="/public/img/dsgo.gif" style="max-width: 100%;
-    max-height: 100%;"></div>
-      <p>吴大叔，20已过半，30还未满，175cm的个子，65kg的体重，平淡的就像差不多先生，一个非主流的程序员，目前的理想是赚钱，得一灵魂伴侣，然后隐居山水之间，蹦野迪</p>
-      <h3>友情链接</h3>
-      <p>一切只是开始,我从未放弃过改变</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="https://github.com/wuxiumu">github</a></li>
-        <li><a href="https://meiyoufan.com">个人站点</a></li>
-        <li><a href="http://wqb.science">github站点</a></li>
-      </ul>
-      <hr class="hidden-sm hidden-md hidden-lg">
+    <div class="jumbotron">
+        <h1>欢迎页！</h1>
+        <p>这是一个提交表单实例。</p>
+        <p>
+        <a class="btn btn-primary btn-lg" role="button" href="/tts/Text_speech">
+            文字转语音</a>
+        <a class="btn btn-primary btn-lg" role="button" href="/tts/Imag_text">
+            图片转文字</a>     
+        <a class="btn btn-primary btn-lg" role="button" target="_blank" href="https://niupic.com/">
+            牛网图床</a>   
+        <a class="btn btn-primary btn-lg" role="button" href="/tts/ttsDel">
+            清空缓存</a>             
+        </p>
+        
+        <code>
+  
+        </code> 
     </div>
-    <div class="col-sm-8" id="main-content">
-       {% block content %}
-
-       {% endblock %}
-    </div>
-  </div>
 </div>
 
-<div class="jumbotron text-center" style="margin-bottom:0">
-  <p>有需要的，可以联系我 wuxiumu@163.com</p>
-  <p>Copyright © 2019. All rights reserved.    本站由 无朽木 纯手工打造  </p>
-  
-</div>
-<script type="text/javascript">
-  
-</script>
+{% block content %}
+
+
+{% endblock %}
+
+ 
 </body>
 </html>

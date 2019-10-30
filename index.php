@@ -23,10 +23,6 @@ define('DEBUG',true);
 
 include "vendor/autoload.php";
 
-// 价值配置文件env
-$dotenv = Dotenv\Dotenv::create(__DIR__);
-$dotenv->load();
-
 // 开发模式，提供更多的错误信息
 if(DEBUG){
 	$whoops = new \Whoops\Run;
@@ -41,6 +37,6 @@ include CORE.'/common/function.php';
 
 include CORE.'/phpmsframe.php';
 
-spl_autoload_register('\core\phpmsframe::load');
+spl_autoload_register('\Core\phpmsframe::load');
 
-\core\phpmsframe::run();
+\Core\phpmsframe::run();

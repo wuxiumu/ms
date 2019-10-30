@@ -121,7 +121,7 @@ function baidu_tts($content,$file){
     // $file = $g_has_error ? "result.txt" : "result." . $format;
     file_put_contents($file, $data);
     //$data['success'] = "$file saved successed, please open it";
-    $_data['status'] = '1';
+    $_data['status'] = '200';
     $_data['msg'] = 'ok';
     $_data['php'] = 'ms';  
     return $_data;      

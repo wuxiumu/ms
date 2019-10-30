@@ -1,10 +1,10 @@
 <?php
 
-namespace core;
+namespace Core;
 
 class phpmsframe 
 {
-	public static $classMap = array();
+	public static $classMap = [];
 
 	public $assign;
 
@@ -62,9 +62,7 @@ class phpmsframe
  
 	static public function run()
 	{		
-		\core\lib\log::init();
-		\core\lib\log::log($_SERVER);
-		$route = new \core\lib\route();
+		$route = new \Core\lib\route();
 		$ctrlClass = $route->ctrl;
 		$action = $route->action;		
 		$ctrlfile = APP.'/ctrl/'.$ctrlClass.'Ctrl.php';
@@ -121,7 +119,7 @@ class phpmsframe
 
 	static private function reportingDog($msg){
 		echo $msg."\n";		
-		include 'smile/havefun.php';		
+		include 'lib/smile/havefun.php';		
 		$num = str_pad(rand(00,32),2,"0",STR_PAD_LEFT);
 		$num = "str_".$num;		
 		$Parsedown = new \Parsedown();

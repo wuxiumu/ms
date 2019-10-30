@@ -1,8 +1,8 @@
 <?php
 
-namespace core\lib;
+namespace Core\Lib;
 
-use \core\lib\conf;
+use \Core\Lib\conf;
 
 use Medoo\Medoo;
 
@@ -10,16 +10,15 @@ class model extends Medoo
 {	
 	public function __construct()
 	{
-		//$option = conf::all('database');	// 默认配置文件加载
-
+		$option = conf::all('database');	// 默认配置文件加载
 		//env 文件加载配置数据
-		$option['mysql_medoo_conf'] = [
-			"database_type" =>  getenv('DB_CONNECTION'),
-			"database_name" => getenv('DB_DATABASE'),
-			"server" => getenv('DB_HOST'),
-			"username" => getenv('DB_USERNAME'),
-			"password" => getenv('DB_PASSWORD')
-		];	
+		// $option['mysql_medoo_conf'] = [
+		// 	"database_type" =>  getenv('DB_CONNECTION'),
+		// 	"database_name" => getenv('DB_DATABASE'),
+		// 	"server" => getenv('DB_HOST'),
+		// 	"username" => getenv('DB_USERNAME'),
+		// 	"password" => getenv('DB_PASSWORD')
+		// ];	
 		parent::__construct($option['mysql_medoo_conf']);
 	}
 }

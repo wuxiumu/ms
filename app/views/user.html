@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>纯CSS3实现一个挥手的多啦A梦机器猫动画DEMO演示</title>
+
+<style type="text/css">
+
+	#main{width:640px;height:550px;background:lightblue;margin:0 auto;position:relative;margin-top:30px;}
+	header{width:330px;height:330px;background:#04a0ea;border-radius:50%;margin-left:150px;border:2px solid #666;}
+	.face{width:290px;height:290px;background:#fff;border-radius:50%;position:relative;top:37px;border:2px solid #666;
+		left:18px;}
+	.eye_1{width:70px;height:85px;border:2px solid #666;border-top-left-radius:70px;background:#fff;z-index:2;
+		position:relative;left:90px;top:-290px;border-radius:50%;}
+	.eye_11{width:25px;height:30px;border:2px solid #666;background:#000;border-radius:50%;z-index:3;
+		position:relative;left:120px;top:-345px;
+		animation-name:myFrame1;
+		animation-duration:2s;
+		animation-iteration-count:infinite;
+		animation-direction:alternate;
+		}
+	@keyframes myFrame1{
+				0%{transform:translateX(-20px);};
+		50%{transform:translateX(20px);};
+		100%{transform:translateX(-20px);};
+			}
+	.eye_2{width:70px;height:85px;border:2px solid #666;border-top-left-radius:70px;background:#fff;z-index:2;
+		position:relative;left:162px;top:-414px;border-radius:50%;}
+	.eye_22{width:25px;height:30px;border:2px solid #666;background:#000;border-radius:50%;z-index:3;
+		position:relative;left:178px;top:-469px;
+		animation-name:myFrame2;
+		animation-duration:2s;
+		animation-iteration-count:infinite;
+		animation-direction:alternate;
+		}
+	@keyframes myFrame2{
+		0%{transform:translateX(20px)};
+		50%{transform:translateX(-20px)};
+		100%{transform:translateX(20px)}
+	}
+	.nose{width:50px;height:50px;background:#d10e30;border-radius:50%;border:2px solid #666;position:relative;
+		left:136px;top:-472px;z-index:3;}
+	.white{width:20px;height:20px;background:#fff;border-radius:50%;border:2px solid #666;position:relative;
+		left:151px;top:-514px;z-index:3;}
+	.mouth1{height:150px;width:2px;background:#666;position:absolute;top:121px;left:312px;}
+	.mouth2{width:250px;height:200px;border-bottom:2px solid #666;position:absolute;top:70px;border-radius:50%;
+		left:190px;z-index:4;}
+	.mustache_1{width:80px;border:1px solid #666;-ms-transform:rotate(30deg);-moz-transform:rotate(30deg);
+		-webkit-transform:rotate(30deg);position:absolute;top:135px;left:200px;}
+	.mustache_2{width:90px;border:1px solid #666;-ms-transform:rotate(5deg);-moz-transform:rotate(5deg);
+		-webkit-transform:rotate(5deg);position:absolute;top:180px;left:180px;}
+	.mustache_3{width:90px;border:1px solid #666;-ms-transform:rotate(-20deg);-moz-transform:rotate(-20deg);
+		-webkit-transform:rotate(-20deg);position:absolute;top:225px;left:184px;}
+	.mustache_4{width:80px;border:1px solid #666;-ms-transform:rotate(150deg);-moz-transform:rotate(150deg);
+		-webkit-transform:rotate(150deg);position:absolute;top:135px;left:342px;}
+	.mustache_5{width:90px;border:1px solid #666;-ms-transform:rotate(170deg);-moz-transform:rotate(170deg);
+		-webkit-transform:rotate(170deg);position:absolute;top:175px;left:355px;}
+	.mustache_6{width:90px;border:1px solid #666;-ms-transform:rotate(30deg);-moz-transform:rotate(30deg);
+		-webkit-transform:rotate(30deg);position:absolute;top:230px;left:345px;}
+	.bozi{width:220px;height:15px;border-radius:5px;border:2px solid #666;background:#db042e;position:absolute;
+		top:290px;left:206px;z-index:4;}
+	.main{width:222px;height:170px;background:#00a1e9;position:absolute;top:308px;left:207px;z-index:2;}
+	.arm{width:85px;height:55px;background:#00a1e9;position:absolute;top:300px;left:132px;border:2px solid #666;}
+	.arm{border-bottom-left-radius:60%;
+		animation-name:arm;
+		animation-duration:1s;
+		animation-iteration-count:infinite;
+		animation-direction:alternate;
+		transform-origin:right;
+		}
+	@keyframes arm{
+		0%{transform:rotateZ(20deg);};
+		50%{transform:rotateZ(140deg);};
+		100%{transform:rotateZ(20deg);};
+	}
+		
+	.arm_2{width:85px;height:55px;background:#00a1e9;position:absolute;top:320px;left:363px;border:2px solid #666;
+		border-bottom-left-radius:60%;-ms-transform:rotate(-80deg);-moz-transform:rotate(-80deg);
+		-webkit-transform:rotate(-80deg);z-index:3;border-radius:10% 10% 50% 100%;}
+	.hand{width:60px;height:60px;background:#fff;position:absolute;top:289px;left:90px;border:2px solid #666;
+		border-radius:50%;z-index:2;
+		animation-name:arm2;
+		animation-duration:1s;
+		animation-iteration-count:infinite;
+		animation-direction:alternate;
+		transform-origin:right;
+		}
+	@keyframes arm2{
+		0%{transform:rotateZ(50deg);};
+		50%{transform:rotateZ(140deg);};
+		100%{transform:rotateZ(50deg);};
+	}
+	.hand_2{width:60px;height:60px;background:#fff;position:absolute;top:361px;left:344px;border:2px solid #666;
+		border-radius:50%;z-index:4;}
+	.bell_1{width:50px;height:50px;background:#f5e548;position:absolute;top:300px;left:286px;border:2px solid #666;
+		border-radius:50%;z-index:3;}
+	.bell_2{width:50px;height:10px;background:#f5e548;position:absolute;top:315px;left:286px;border:2px solid #666;
+		border-radius:40%;z-index:3;}
+	.bell_3{width:12px;height:12px;background:#836855;position:absolute;top:330px;left:304px;border:2px solid #333;
+		border-radius:50%;z-index:3;}
+	.bell_4{height:10px;position:absolute;top:340px;left:311px;border:1px solid #666;z-index:3;}
+	.heaith_1{width:180px;height:135px;background:#fff;border-radius:50%;border:2px solid #666;z-index:2;
+		position:absolute;top:305px;left:224px;}
+	.heaith_2{width:140px;height:50px;background:#fff;border-radius:0 0 50% 100%;border:2px solid #666;z-index:2;
+		position:absolute;top:378px;left:254px;}
+	.heaith_3{width:120px;height:80px;background:#00a0e8;border-radius:50%;border:2px solid #666;z-index:2;
+		position:absolute;top:415px;left:195px;}
+	.heaith_4{width:120px;height:80px;background:#00a0e8;border-radius:50%;border:2px solid #666;z-index:2;
+		position:absolute;top:415px;left:318px;}
+	.footer{width:60px;height:100px;background:#fff;border-radius:50%;border:2px solid #666;z-index:4;
+		position:absolute;top:400px;left:288px;}
+		</style>
+</head>
+
+<body>
+<div id="main">
+
+	<header>
+		<nav class="face"></nav>
+		<nav class="eye_1"></nav>
+		<nav class="eye_11"></nav>
+		<nav class="eye_2"></nav>
+		<nav class="eye_22"></nav>
+		<nav class="nose"></nav>
+		<nav class="white"></nav>
+		<nav class="mouth1"></nav>
+		<nav class="mouth2"></nav>
+		<div class="mustache_1"></div>
+		<div class="mustache_2"></div>
+		<div class="mustache_3"></div>
+		<div class="mustache_4"></div>
+		<div class="mustache_5"></div>
+		<div class="mustache_6"></div>
+		
+	</header>
+	<article>
+		<div class="bozi"></div>
+		<div class="main"></div>
+		<div class="arm"></div>
+		<div class="arm_2"></div>
+		<div class="hand"></div>
+		<div class="hand_2"></div>
+		<div class="bell_1"></div>
+		<div class="bell_2"></div>
+		<div class="bell_3"></div>
+		<div class="bell_4"></div>
+		<div class="heaith_1"></div>
+		<div class="heaith_2"></div>
+		<div class="heaith_3"></div>
+		<div class="heaith_4"></div>
+		<div class="footer"></div>
+	</article>
+
+</div>
+
+<div style="text-align:center;clear:both;">
+ 
+</div>
+
+</body>
+</html>
