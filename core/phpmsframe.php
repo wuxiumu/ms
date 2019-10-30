@@ -62,7 +62,7 @@ class phpmsframe
  
 	static public function run()
 	{		
-		$route = new \Core\lib\route();
+		$route = new \core\lib\route();
 		$ctrlClass = $route->ctrl;
 		$action = $route->action;		
 		$ctrlfile = APP.'/ctrl/'.$ctrlClass.'Ctrl.php';

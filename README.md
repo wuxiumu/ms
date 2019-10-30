@@ -5,6 +5,10 @@
 2. 运行效率
 3. 证明自己
 
+##  phpms 框架 demo
+
+访问地址 http://demo.phpms.cn
+
 ##  phpms 框架 博客
 
 访问地址 ms.meiyoufan.com 

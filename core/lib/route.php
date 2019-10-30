@@ -5,7 +5,7 @@
  * ======================================================================== */
 namespace Core\Lib;
 
-use Core\Lib\conf;
+use core\lib\conf;
 
 class route
 {
