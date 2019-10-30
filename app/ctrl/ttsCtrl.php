@@ -15,20 +15,24 @@ class ttsCtrl extends phpms
 	public function ttsImage(){
 		require PHPMSFRAME.'/lib/OCR/api.php';
 		$client = new \AipOcr('15465241', 'yLMHVyCWg64RRbVVlRI8GGP5', 'PyGbkuDvmFvn1hDctxpfgfwOkBPLCPr9');
-		$url = $_POST['url'];
+		$url = $_POST['url'];		 
 		// 调用通用文字识别, 图片参数为远程url图片
-		$client->basicGeneralUrl($url);
-		// 如果有可选参数
-		$options = array();
-		$options["language_type"] = "CHN_ENG";
-		$options["detect_direction"] = "true";
-		$options["detect_language"] = "true";
-		$options["probability"] = "true";
-		// 带参数调用通用文字识别, 图片参数为远程url图片
-		$re = $client->basicGeneralUrl($url, $options);
-		$str = '';
-		foreach($re['words_result'] as $k=>$v){
-			$str .= $v['words'];
+		try {
+			$client->basicGeneralUrl($url);
+			// 如果有可选参数
+			$options = array();
+			$options["language_type"] = "CHN_ENG";
+			$options["detect_direction"] = "true";
+			$options["detect_language"] = "true";
+			$options["probability"] = "true";
+			// 带参数调用通用文字识别, 图片参数为远程url图片
+			$re = $client->basicGeneralUrl($url, $options);
+			$str = '';
+			foreach($re['words_result'] as $k=>$v){
+				$str .= $v['words'];
+			}
+		} catch (\Throwable $th) {
+			$str = '没有文字';
 		}
 		echo json_encode($str,JSON_UNESCAPED_UNICODE);
 	}
